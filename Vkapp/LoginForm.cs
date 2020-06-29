@@ -15,24 +15,21 @@ namespace Vkapp
 {
     public partial class LoginForm : Form
     {
-        VkApi api = new VkApi();
+       
       
         public LoginForm()
         {
             InitializeComponent();
         }
-        public LoginForm(VkApi vkapi)
-        {
-            api = vkapi;
-            InitializeComponent();
-        }
+      
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
+          
             EmailTextbox.Text = "79003557072";
             PasswordlTextbox.Text = "Aveemperor404";
-           // LoginAsync();
+            LoginAsync();
         }
 
 
@@ -41,13 +38,14 @@ namespace Vkapp
 
             try
             {
-                await api.AuthorizeAsync(new ApiAuthParams
+                await VK.api.AuthorizeAsync(new ApiAuthParams
                 {
                     ApplicationId = 7429505,
                     Login = EmailTextbox.Text,
                     Password = PasswordlTextbox.Text,
                     Settings = Settings.Groups
                 });
+                
             }
             catch(VkNet.Exception.VkAuthorizationException)
             {
@@ -55,13 +53,10 @@ namespace Vkapp
                 AuthErrorLabel.Text = "Неверный логин или пароль";
                 return;
             }
-            
-            MainForm mainForm = new MainForm(api, this);
-           
-            mainForm.Show();
-            Hide();
+
+            Close();
         }
-        private async void Auth_Click(object sender, EventArgs e)
+        private void Auth_Click(object sender, EventArgs e)
         {
 
             LoginAsync();
@@ -78,5 +73,7 @@ namespace Vkapp
         {
             PasswordlTextbox.UseSystemPasswordChar = !PassViev.Checked;
         }
+
+        
     }
 }

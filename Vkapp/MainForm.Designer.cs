@@ -32,14 +32,15 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.Page = new System.Windows.Forms.TabControl();
             this.MyPage = new System.Windows.Forms.TabPage();
+            this.LastloginLabel = new System.Windows.Forms.Label();
+            this.NameLabel = new System.Windows.Forms.Label();
+            this.MyAvatarPicture = new System.Windows.Forms.PictureBox();
             this.Messages = new System.Windows.Forms.TabPage();
             this.Dialog = new System.Windows.Forms.TabPage();
-            this.Friends = new System.Windows.Forms.TabPage();
             this.Groups = new System.Windows.Forms.TabPage();
+            this.Friends = new System.Windows.Forms.TabPage();
             this.Settings = new System.Windows.Forms.TabPage();
-            this.MyAvatarPicture = new System.Windows.Forms.PictureBox();
-            this.NameLabel = new System.Windows.Forms.Label();
-            this.LastloginLabel = new System.Windows.Forms.Label();
+            this.StatusLabel = new System.Windows.Forms.Label();
             this.Page.SuspendLayout();
             this.MyPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MyAvatarPicture)).BeginInit();
@@ -93,79 +94,17 @@
             // 
             // MyPage
             // 
+            this.MyPage.Controls.Add(this.StatusLabel);
             this.MyPage.Controls.Add(this.LastloginLabel);
             this.MyPage.Controls.Add(this.NameLabel);
             this.MyPage.Controls.Add(this.MyAvatarPicture);
             this.MyPage.Location = new System.Drawing.Point(4, 24);
             this.MyPage.Name = "MyPage";
-            this.MyPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.MyPage.Padding = new System.Windows.Forms.Padding(3);
             this.MyPage.Size = new System.Drawing.Size(633, 400);
             this.MyPage.TabIndex = 0;
             this.MyPage.Text = "MyPage";
             this.MyPage.UseVisualStyleBackColor = true;
-            // 
-            // Messages
-            // 
-            this.Messages.Location = new System.Drawing.Point(4, 24);
-            this.Messages.Name = "Messages";
-            this.Messages.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.Messages.Size = new System.Drawing.Size(543, 330);
-            this.Messages.TabIndex = 1;
-            this.Messages.Text = "Messages";
-            this.Messages.UseVisualStyleBackColor = true;
-            // 
-            // Dialog
-            // 
-            this.Dialog.Location = new System.Drawing.Point(4, 24);
-            this.Dialog.Name = "Dialog";
-            this.Dialog.Size = new System.Drawing.Size(543, 330);
-            this.Dialog.TabIndex = 2;
-            this.Dialog.Text = "Dialog";
-            this.Dialog.UseVisualStyleBackColor = true;
-            // 
-            // Friends
-            // 
-            this.Friends.Location = new System.Drawing.Point(4, 24);
-            this.Friends.Name = "Friends";
-            this.Friends.Size = new System.Drawing.Size(543, 330);
-            this.Friends.TabIndex = 3;
-            this.Friends.Text = "Friends";
-            this.Friends.UseVisualStyleBackColor = true;
-            // 
-            // Groups
-            // 
-            this.Groups.Location = new System.Drawing.Point(4, 24);
-            this.Groups.Name = "Groups";
-            this.Groups.Size = new System.Drawing.Size(543, 330);
-            this.Groups.TabIndex = 4;
-            this.Groups.Text = "Groups";
-            this.Groups.UseVisualStyleBackColor = true;
-            // 
-            // Settings
-            // 
-            this.Settings.Location = new System.Drawing.Point(4, 24);
-            this.Settings.Name = "Settings";
-            this.Settings.Size = new System.Drawing.Size(543, 330);
-            this.Settings.TabIndex = 5;
-            this.Settings.Text = "Settings";
-            this.Settings.UseVisualStyleBackColor = true;
-            // 
-            // MyAvatarPicture
-            // 
-            this.MyAvatarPicture.Location = new System.Drawing.Point(19, 19);
-            this.MyAvatarPicture.Name = "MyAvatarPicture";
-            this.MyAvatarPicture.Size = new System.Drawing.Size(171, 161);
-            this.MyAvatarPicture.TabIndex = 0;
-            this.MyAvatarPicture.TabStop = false;
-            // 
-            // NameLabel
-            // 
-            this.NameLabel.AutoSize = true;
-            this.NameLabel.Location = new System.Drawing.Point(225, 19);
-            this.NameLabel.Name = "NameLabel";
-            this.NameLabel.Size = new System.Drawing.Size(66, 14);
-            this.NameLabel.TabIndex = 1;
-            this.NameLabel.Text = "NameLabel";
             // 
             // LastloginLabel
             // 
@@ -176,6 +115,79 @@
             this.LastloginLabel.TabIndex = 2;
             this.LastloginLabel.Text = "заходил 2 недели назад";
             this.LastloginLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // NameLabel
+            // 
+            this.NameLabel.AutoSize = true;
+            this.NameLabel.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.NameLabel.Location = new System.Drawing.Point(225, 19);
+            this.NameLabel.Name = "NameLabel";
+            this.NameLabel.Size = new System.Drawing.Size(87, 19);
+            this.NameLabel.TabIndex = 1;
+            this.NameLabel.Text = "NameLabel";
+            // 
+            // MyAvatarPicture
+            // 
+            this.MyAvatarPicture.Location = new System.Drawing.Point(19, 19);
+            this.MyAvatarPicture.Name = "MyAvatarPicture";
+            this.MyAvatarPicture.Size = new System.Drawing.Size(171, 161);
+            this.MyAvatarPicture.TabIndex = 0;
+            this.MyAvatarPicture.TabStop = false;
+            // 
+            // Messages
+            // 
+            this.Messages.Location = new System.Drawing.Point(4, 24);
+            this.Messages.Name = "Messages";
+            this.Messages.Padding = new System.Windows.Forms.Padding(3);
+            this.Messages.Size = new System.Drawing.Size(633, 400);
+            this.Messages.TabIndex = 1;
+            this.Messages.Text = "Messages";
+            this.Messages.UseVisualStyleBackColor = true;
+            // 
+            // Dialog
+            // 
+            this.Dialog.Location = new System.Drawing.Point(4, 24);
+            this.Dialog.Name = "Dialog";
+            this.Dialog.Size = new System.Drawing.Size(633, 400);
+            this.Dialog.TabIndex = 2;
+            this.Dialog.Text = "Dialog";
+            this.Dialog.UseVisualStyleBackColor = true;
+            // 
+            // Groups
+            // 
+            this.Groups.Location = new System.Drawing.Point(4, 24);
+            this.Groups.Name = "Groups";
+            this.Groups.Size = new System.Drawing.Size(633, 400);
+            this.Groups.TabIndex = 4;
+            this.Groups.Text = "Groups";
+            this.Groups.UseVisualStyleBackColor = true;
+            // 
+            // Friends
+            // 
+            this.Friends.Location = new System.Drawing.Point(4, 24);
+            this.Friends.Name = "Friends";
+            this.Friends.Size = new System.Drawing.Size(633, 400);
+            this.Friends.TabIndex = 3;
+            this.Friends.Text = "Friends";
+            this.Friends.UseVisualStyleBackColor = true;
+            // 
+            // Settings
+            // 
+            this.Settings.Location = new System.Drawing.Point(4, 24);
+            this.Settings.Name = "Settings";
+            this.Settings.Size = new System.Drawing.Size(633, 400);
+            this.Settings.TabIndex = 5;
+            this.Settings.Text = "Settings";
+            this.Settings.UseVisualStyleBackColor = true;
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.AutoSize = true;
+            this.StatusLabel.Location = new System.Drawing.Point(225, 45);
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(42, 14);
+            this.StatusLabel.TabIndex = 3;
+            this.StatusLabel.Text = "Status";
             // 
             // MainForm
             // 
@@ -212,5 +224,6 @@
         private System.Windows.Forms.TabPage Groups;
         private System.Windows.Forms.TabPage Friends;
         private System.Windows.Forms.TabPage Settings;
+        private System.Windows.Forms.Label StatusLabel;
     }
 }

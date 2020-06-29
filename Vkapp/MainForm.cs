@@ -15,27 +15,44 @@ namespace Vkapp
 {
     public partial class MainForm : Form
     {
-        VkApi api;
+       
    
         public MainForm()
         {
+            VK.api = new VkApi();
             InitializeComponent();
-        }
-        private LoginForm L;
-        public MainForm(VkApi Vkapi, LoginForm loginForm)
-        {
-            api = Vkapi;
-            InitializeComponent();
-            L = loginForm;
+           // this.Visible = false;
+            LoginForm login = new LoginForm();
+            login.ShowDialog();
+           
+           
+            
         }
 
+        private void LoadUserinfo()
+        {
+        
+            User MyUser=  VK.api.Users.Get(new long[] { (long)VK.api.UserId }).FirstOrDefault();
+
+
+            StatusLabel.Text = VK.api.Status.Get(MyUser.Id).Text;
+            NameLabel.Text = MyUser.FirstName+" "+ MyUser.LastName;
+            string url = MyUser.PhotoMaxOrig.AbsolutePath;
+            MyAvatarPicture.Load(url);
+        }
         private void MainForm_Load(object sender, EventArgs e)
         {
-       
+            if (!VK.api.IsAuthorized)
+                Close();
+            else
+            {
+               LoadUserinfo();
+
+            }
         }
         private async void LogOutAsync()
         {
-             await api.LogOutAsync();
+             await VK.api.LogOutAsync();
         }
 
 
@@ -73,14 +90,8 @@ namespace Vkapp
                     if(result == DialogResult.OK)
                     {
 
-
-
-
-
-                        LoginForm loginForm = new LoginForm(api);
-                        loginForm.Show();
                         LogOutAsync();
-                        Close();
+                        System.Windows.Forms.Application.Exit();
                     }
                     break;
 
@@ -88,5 +99,7 @@ namespace Vkapp
             }
             ActionList.ClearSelected();
         }
+
+      
     }
 }
