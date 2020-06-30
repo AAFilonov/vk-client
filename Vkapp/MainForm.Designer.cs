@@ -28,35 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ActionList = new System.Windows.Forms.ListBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.Page = new System.Windows.Forms.TabControl();
-            this.TabUserinfo = new System.Windows.Forms.TabPage();
+            this.TabUserInfo = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.UserCountryLabel = new System.Windows.Forms.Label();
+            this.UserGroupButton = new System.Windows.Forms.Button();
+            this.UserWallButton = new System.Windows.Forms.Button();
+            this.UserAudioButton = new System.Windows.Forms.Button();
+            this.UserPhotoButton = new System.Windows.Forms.Button();
+            this.UserFollowersButton = new System.Windows.Forms.Button();
+            this.UserFriendsButton = new System.Windows.Forms.Button();
             this.UserUpdateButton = new System.Windows.Forms.Button();
             this.NameLabel = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.OnlineStatusLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.MyAvatarPicture = new System.Windows.Forms.PictureBox();
-            this.TabMessages = new System.Windows.Forms.TabPage();
+            this.TabConversations = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.AddConversationButton = new System.Windows.Forms.Button();
+            this.ReloadConversationButton = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.DialogGoLabel = new System.Windows.Forms.Label();
+            this.UreadedCountLabel = new System.Windows.Forms.Label();
+            this.DialogPicture = new System.Windows.Forms.PictureBox();
+            this.DialogTextPrevLabel = new System.Windows.Forms.Label();
+            this.DialogTitleLabel = new System.Windows.Forms.Label();
+            this.ConversationsList = new System.Windows.Forms.ListView();
+            this.ConversationName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.LastMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.UnreadedMessages = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TabDialog = new System.Windows.Forms.TabPage();
             this.TabGroups = new System.Windows.Forms.TabPage();
             this.TabFriends = new System.Windows.Forms.TabPage();
             this.TabSettings = new System.Windows.Forms.TabPage();
-            this.UserFriendsButton = new System.Windows.Forms.Button();
-            this.UserFollowersButton = new System.Windows.Forms.Button();
-            this.UserPhotoButton = new System.Windows.Forms.Button();
-            this.UserAudioButton = new System.Windows.Forms.Button();
-            this.UserWallButton = new System.Windows.Forms.Button();
-            this.UserGroupButton = new System.Windows.Forms.Button();
-            this.UserCountryLabel = new System.Windows.Forms.Label();
             this.TabWall = new System.Windows.Forms.TabPage();
+            this.DialogPictureList = new System.Windows.Forms.ImageList(this.components);
+            this.DialogDateLabel = new System.Windows.Forms.Label();
+            this.DataColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Page.SuspendLayout();
-            this.TabUserinfo.SuspendLayout();
+            this.TabUserInfo.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MyAvatarPicture)).BeginInit();
+            this.TabConversations.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DialogPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // ActionList
@@ -91,8 +112,8 @@
             // Page
             // 
             this.Page.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.Page.Controls.Add(this.TabUserinfo);
-            this.Page.Controls.Add(this.TabMessages);
+            this.Page.Controls.Add(this.TabUserInfo);
+            this.Page.Controls.Add(this.TabConversations);
             this.Page.Controls.Add(this.TabDialog);
             this.Page.Controls.Add(this.TabGroups);
             this.Page.Controls.Add(this.TabFriends);
@@ -102,22 +123,22 @@
             this.Page.Location = new System.Drawing.Point(162, 13);
             this.Page.Name = "Page";
             this.Page.SelectedIndex = 0;
-            this.Page.Size = new System.Drawing.Size(641, 428);
+            this.Page.Size = new System.Drawing.Size(641, 448);
             this.Page.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.Page.TabIndex = 2;
             this.Page.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.Page_Selecting);
             // 
-            // TabUserinfo
+            // TabUserInfo
             // 
-            this.TabUserinfo.Controls.Add(this.panel2);
-            this.TabUserinfo.Controls.Add(this.panel1);
-            this.TabUserinfo.Location = new System.Drawing.Point(4, 24);
-            this.TabUserinfo.Name = "TabUserinfo";
-            this.TabUserinfo.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUserinfo.Size = new System.Drawing.Size(633, 400);
-            this.TabUserinfo.TabIndex = 0;
-            this.TabUserinfo.Text = "Userinfo";
-            this.TabUserinfo.UseVisualStyleBackColor = true;
+            this.TabUserInfo.Controls.Add(this.panel2);
+            this.TabUserInfo.Controls.Add(this.panel1);
+            this.TabUserInfo.Location = new System.Drawing.Point(4, 24);
+            this.TabUserInfo.Name = "TabUserInfo";
+            this.TabUserInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.TabUserInfo.Size = new System.Drawing.Size(633, 420);
+            this.TabUserInfo.TabIndex = 0;
+            this.TabUserInfo.Text = "UserInfo";
+            this.TabUserInfo.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -138,6 +159,86 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(359, 375);
             this.panel2.TabIndex = 5;
+            // 
+            // UserCountryLabel
+            // 
+            this.UserCountryLabel.AutoSize = true;
+            this.UserCountryLabel.Location = new System.Drawing.Point(20, 60);
+            this.UserCountryLabel.Name = "UserCountryLabel";
+            this.UserCountryLabel.Size = new System.Drawing.Size(0, 14);
+            this.UserCountryLabel.TabIndex = 11;
+            // 
+            // UserGroupButton
+            // 
+            this.UserGroupButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UserGroupButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UserGroupButton.ForeColor = System.Drawing.Color.SteelBlue;
+            this.UserGroupButton.Location = new System.Drawing.Point(29, 200);
+            this.UserGroupButton.Name = "UserGroupButton";
+            this.UserGroupButton.Size = new System.Drawing.Size(152, 52);
+            this.UserGroupButton.TabIndex = 10;
+            this.UserGroupButton.Text = "подписок";
+            this.UserGroupButton.UseVisualStyleBackColor = true;
+            // 
+            // UserWallButton
+            // 
+            this.UserWallButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UserWallButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UserWallButton.ForeColor = System.Drawing.Color.SteelBlue;
+            this.UserWallButton.Location = new System.Drawing.Point(29, 258);
+            this.UserWallButton.Name = "UserWallButton";
+            this.UserWallButton.Size = new System.Drawing.Size(318, 52);
+            this.UserWallButton.TabIndex = 9;
+            this.UserWallButton.Text = "Записи на стене";
+            this.UserWallButton.UseVisualStyleBackColor = true;
+            // 
+            // UserAudioButton
+            // 
+            this.UserAudioButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UserAudioButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UserAudioButton.ForeColor = System.Drawing.Color.SteelBlue;
+            this.UserAudioButton.Location = new System.Drawing.Point(187, 200);
+            this.UserAudioButton.Name = "UserAudioButton";
+            this.UserAudioButton.Size = new System.Drawing.Size(160, 52);
+            this.UserAudioButton.TabIndex = 8;
+            this.UserAudioButton.Text = "аудиозаписей";
+            this.UserAudioButton.UseVisualStyleBackColor = true;
+            // 
+            // UserPhotoButton
+            // 
+            this.UserPhotoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UserPhotoButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UserPhotoButton.ForeColor = System.Drawing.Color.SteelBlue;
+            this.UserPhotoButton.Location = new System.Drawing.Point(241, 142);
+            this.UserPhotoButton.Name = "UserPhotoButton";
+            this.UserPhotoButton.Size = new System.Drawing.Size(106, 52);
+            this.UserPhotoButton.TabIndex = 7;
+            this.UserPhotoButton.Text = "фото";
+            this.UserPhotoButton.UseVisualStyleBackColor = true;
+            // 
+            // UserFollowersButton
+            // 
+            this.UserFollowersButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UserFollowersButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UserFollowersButton.ForeColor = System.Drawing.Color.SteelBlue;
+            this.UserFollowersButton.Location = new System.Drawing.Point(136, 142);
+            this.UserFollowersButton.Name = "UserFollowersButton";
+            this.UserFollowersButton.Size = new System.Drawing.Size(99, 52);
+            this.UserFollowersButton.TabIndex = 6;
+            this.UserFollowersButton.Text = "подпищиков";
+            this.UserFollowersButton.UseVisualStyleBackColor = true;
+            // 
+            // UserFriendsButton
+            // 
+            this.UserFriendsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UserFriendsButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.UserFriendsButton.ForeColor = System.Drawing.Color.SteelBlue;
+            this.UserFriendsButton.Location = new System.Drawing.Point(29, 142);
+            this.UserFriendsButton.Name = "UserFriendsButton";
+            this.UserFriendsButton.Size = new System.Drawing.Size(101, 52);
+            this.UserFriendsButton.TabIndex = 5;
+            this.UserFriendsButton.Text = "друзей";
+            this.UserFriendsButton.UseVisualStyleBackColor = true;
             // 
             // UserUpdateButton
             // 
@@ -200,21 +301,170 @@
             this.MyAvatarPicture.TabIndex = 0;
             this.MyAvatarPicture.TabStop = false;
             // 
-            // TabMessages
+            // TabConversations
             // 
-            this.TabMessages.Location = new System.Drawing.Point(4, 24);
-            this.TabMessages.Name = "TabMessages";
-            this.TabMessages.Padding = new System.Windows.Forms.Padding(3);
-            this.TabMessages.Size = new System.Drawing.Size(633, 400);
-            this.TabMessages.TabIndex = 1;
-            this.TabMessages.Text = "Messages";
-            this.TabMessages.UseVisualStyleBackColor = true;
+            this.TabConversations.Controls.Add(this.panel4);
+            this.TabConversations.Controls.Add(this.panel3);
+            this.TabConversations.Controls.Add(this.ConversationsList);
+            this.TabConversations.Location = new System.Drawing.Point(4, 24);
+            this.TabConversations.Name = "TabConversations";
+            this.TabConversations.Padding = new System.Windows.Forms.Padding(3);
+            this.TabConversations.Size = new System.Drawing.Size(633, 420);
+            this.TabConversations.TabIndex = 1;
+            this.TabConversations.Text = "Conversations";
+            this.TabConversations.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.SystemColors.Info;
+            this.panel4.Controls.Add(this.AddConversationButton);
+            this.panel4.Controls.Add(this.ReloadConversationButton);
+            this.panel4.Location = new System.Drawing.Point(498, 7);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(129, 114);
+            this.panel4.TabIndex = 3;
+            // 
+            // AddConversationButton
+            // 
+            this.AddConversationButton.BackColor = System.Drawing.Color.Transparent;
+            this.AddConversationButton.FlatAppearance.BorderSize = 0;
+            this.AddConversationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AddConversationButton.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Underline);
+            this.AddConversationButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.AddConversationButton.Location = new System.Drawing.Point(15, 16);
+            this.AddConversationButton.Name = "AddConversationButton";
+            this.AddConversationButton.Size = new System.Drawing.Size(111, 33);
+            this.AddConversationButton.TabIndex = 1;
+            this.AddConversationButton.Text = "Добавить 20";
+            this.AddConversationButton.UseVisualStyleBackColor = false;
+            this.AddConversationButton.Click += new System.EventHandler(this.AddConversationButton_Click);
+            // 
+            // ReloadConversationButton
+            // 
+            this.ReloadConversationButton.BackColor = System.Drawing.Color.Transparent;
+            this.ReloadConversationButton.FlatAppearance.BorderSize = 0;
+            this.ReloadConversationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReloadConversationButton.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Underline);
+            this.ReloadConversationButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.ReloadConversationButton.Location = new System.Drawing.Point(3, 55);
+            this.ReloadConversationButton.Name = "ReloadConversationButton";
+            this.ReloadConversationButton.Size = new System.Drawing.Size(123, 37);
+            this.ReloadConversationButton.TabIndex = 2;
+            this.ReloadConversationButton.Text = "Обновить";
+            this.ReloadConversationButton.UseVisualStyleBackColor = false;
+            this.ReloadConversationButton.Click += new System.EventHandler(this.ReloadConversationButton_Click);
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.SystemColors.Info;
+            this.panel3.Controls.Add(this.DialogDateLabel);
+            this.panel3.Controls.Add(this.DialogGoLabel);
+            this.panel3.Controls.Add(this.UreadedCountLabel);
+            this.panel3.Controls.Add(this.DialogPicture);
+            this.panel3.Controls.Add(this.DialogTextPrevLabel);
+            this.panel3.Controls.Add(this.DialogTitleLabel);
+            this.panel3.Location = new System.Drawing.Point(-4, 7);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(495, 114);
+            this.panel3.TabIndex = 2;
+            // 
+            // DialogGoLabel
+            // 
+            this.DialogGoLabel.AutoSize = true;
+            this.DialogGoLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Underline);
+            this.DialogGoLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.DialogGoLabel.Location = new System.Drawing.Point(418, 86);
+            this.DialogGoLabel.Name = "DialogGoLabel";
+            this.DialogGoLabel.Size = new System.Drawing.Size(63, 17);
+            this.DialogGoLabel.TabIndex = 7;
+            this.DialogGoLabel.Text = "Перейти";
+            this.DialogGoLabel.Visible = false;
+            // 
+            // UreadedCountLabel
+            // 
+            this.UreadedCountLabel.AutoSize = true;
+            this.UreadedCountLabel.BackColor = System.Drawing.Color.SteelBlue;
+            this.UreadedCountLabel.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.UreadedCountLabel.ForeColor = System.Drawing.SystemColors.Info;
+            this.UreadedCountLabel.Location = new System.Drawing.Point(442, 46);
+            this.UreadedCountLabel.Name = "UreadedCountLabel";
+            this.UreadedCountLabel.Size = new System.Drawing.Size(18, 19);
+            this.UreadedCountLabel.TabIndex = 6;
+            this.UreadedCountLabel.Text = "0";
+            this.UreadedCountLabel.Visible = false;
+            // 
+            // DialogPicture
+            // 
+            this.DialogPicture.Location = new System.Drawing.Point(10, 3);
+            this.DialogPicture.Name = "DialogPicture";
+            this.DialogPicture.Size = new System.Drawing.Size(100, 100);
+            this.DialogPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.DialogPicture.TabIndex = 5;
+            this.DialogPicture.TabStop = false;
+            // 
+            // DialogTextPrevLabel
+            // 
+            this.DialogTextPrevLabel.Location = new System.Drawing.Point(125, 46);
+            this.DialogTextPrevLabel.Name = "DialogTextPrevLabel";
+            this.DialogTextPrevLabel.Size = new System.Drawing.Size(290, 57);
+            this.DialogTextPrevLabel.TabIndex = 4;
+            this.DialogTextPrevLabel.Text = "PrevText";
+            this.DialogTextPrevLabel.Visible = false;
+            // 
+            // DialogTitleLabel
+            // 
+            this.DialogTitleLabel.AutoSize = true;
+            this.DialogTitleLabel.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.DialogTitleLabel.Location = new System.Drawing.Point(124, 17);
+            this.DialogTitleLabel.Name = "DialogTitleLabel";
+            this.DialogTitleLabel.Size = new System.Drawing.Size(40, 19);
+            this.DialogTitleLabel.TabIndex = 3;
+            this.DialogTitleLabel.Text = "Title";
+            this.DialogTitleLabel.Visible = false;
+            // 
+            // ConversationsList
+            // 
+            this.ConversationsList.BackColor = System.Drawing.SystemColors.Info;
+            this.ConversationsList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ConversationsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ConversationName,
+            this.LastMessage,
+            this.UnreadedMessages,
+            this.DataColumn});
+            this.ConversationsList.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.ConversationsList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.ConversationsList.HideSelection = false;
+            this.ConversationsList.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.ConversationsList.LabelWrap = false;
+            this.ConversationsList.Location = new System.Drawing.Point(0, 127);
+            this.ConversationsList.MultiSelect = false;
+            this.ConversationsList.Name = "ConversationsList";
+            this.ConversationsList.Size = new System.Drawing.Size(627, 267);
+            this.ConversationsList.TabIndex = 0;
+            this.ConversationsList.UseCompatibleStateImageBehavior = false;
+            this.ConversationsList.View = System.Windows.Forms.View.Details;
+            this.ConversationsList.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ConversationsList_ItemSelectionChanged);
+            // 
+            // ConversationName
+            // 
+            this.ConversationName.Text = "ConversationName";
+            this.ConversationName.Width = 125;
+            // 
+            // LastMessage
+            // 
+            this.LastMessage.Text = "ConversationLastMessage";
+            this.LastMessage.Width = 278;
+            // 
+            // UnreadedMessages
+            // 
+            this.UnreadedMessages.Text = "Непрочитанных сообщений";
+            this.UnreadedMessages.Width = 53;
             // 
             // TabDialog
             // 
             this.TabDialog.Location = new System.Drawing.Point(4, 24);
             this.TabDialog.Name = "TabDialog";
-            this.TabDialog.Size = new System.Drawing.Size(633, 400);
+            this.TabDialog.Size = new System.Drawing.Size(633, 420);
             this.TabDialog.TabIndex = 2;
             this.TabDialog.Text = "Dialog";
             this.TabDialog.UseVisualStyleBackColor = true;
@@ -223,7 +473,7 @@
             // 
             this.TabGroups.Location = new System.Drawing.Point(4, 24);
             this.TabGroups.Name = "TabGroups";
-            this.TabGroups.Size = new System.Drawing.Size(633, 400);
+            this.TabGroups.Size = new System.Drawing.Size(633, 420);
             this.TabGroups.TabIndex = 4;
             this.TabGroups.Text = "Groups";
             this.TabGroups.UseVisualStyleBackColor = true;
@@ -232,7 +482,7 @@
             // 
             this.TabFriends.Location = new System.Drawing.Point(4, 24);
             this.TabFriends.Name = "TabFriends";
-            this.TabFriends.Size = new System.Drawing.Size(633, 400);
+            this.TabFriends.Size = new System.Drawing.Size(633, 420);
             this.TabFriends.TabIndex = 3;
             this.TabFriends.Text = "Friends";
             this.TabFriends.UseVisualStyleBackColor = true;
@@ -241,99 +491,42 @@
             // 
             this.TabSettings.Location = new System.Drawing.Point(4, 24);
             this.TabSettings.Name = "TabSettings";
-            this.TabSettings.Size = new System.Drawing.Size(633, 400);
+            this.TabSettings.Size = new System.Drawing.Size(633, 420);
             this.TabSettings.TabIndex = 5;
             this.TabSettings.Text = "Settings";
             this.TabSettings.UseVisualStyleBackColor = true;
-            // 
-            // UserFriendsButton
-            // 
-            this.UserFriendsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UserFriendsButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UserFriendsButton.ForeColor = System.Drawing.Color.SteelBlue;
-            this.UserFriendsButton.Location = new System.Drawing.Point(29, 142);
-            this.UserFriendsButton.Name = "UserFriendsButton";
-            this.UserFriendsButton.Size = new System.Drawing.Size(101, 52);
-            this.UserFriendsButton.TabIndex = 5;
-            this.UserFriendsButton.Text = "друзей";
-            this.UserFriendsButton.UseVisualStyleBackColor = true;
-            // 
-            // UserFollowersButton
-            // 
-            this.UserFollowersButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UserFollowersButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UserFollowersButton.ForeColor = System.Drawing.Color.SteelBlue;
-            this.UserFollowersButton.Location = new System.Drawing.Point(136, 142);
-            this.UserFollowersButton.Name = "UserFollowersButton";
-            this.UserFollowersButton.Size = new System.Drawing.Size(99, 52);
-            this.UserFollowersButton.TabIndex = 6;
-            this.UserFollowersButton.Text = "подпищиков";
-            this.UserFollowersButton.UseVisualStyleBackColor = true;
-            // 
-            // UserPhotoButton
-            // 
-            this.UserPhotoButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UserPhotoButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UserPhotoButton.ForeColor = System.Drawing.Color.SteelBlue;
-            this.UserPhotoButton.Location = new System.Drawing.Point(241, 142);
-            this.UserPhotoButton.Name = "UserPhotoButton";
-            this.UserPhotoButton.Size = new System.Drawing.Size(106, 52);
-            this.UserPhotoButton.TabIndex = 7;
-            this.UserPhotoButton.Text = "фото";
-            this.UserPhotoButton.UseVisualStyleBackColor = true;
-            // 
-            // UserAudioButton
-            // 
-            this.UserAudioButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UserAudioButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UserAudioButton.ForeColor = System.Drawing.Color.SteelBlue;
-            this.UserAudioButton.Location = new System.Drawing.Point(187, 200);
-            this.UserAudioButton.Name = "UserAudioButton";
-            this.UserAudioButton.Size = new System.Drawing.Size(160, 52);
-            this.UserAudioButton.TabIndex = 8;
-            this.UserAudioButton.Text = "аудиозаписей";
-            this.UserAudioButton.UseVisualStyleBackColor = true;
-            // 
-            // UserWallButton
-            // 
-            this.UserWallButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UserWallButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UserWallButton.ForeColor = System.Drawing.Color.SteelBlue;
-            this.UserWallButton.Location = new System.Drawing.Point(29, 258);
-            this.UserWallButton.Name = "UserWallButton";
-            this.UserWallButton.Size = new System.Drawing.Size(318, 52);
-            this.UserWallButton.TabIndex = 9;
-            this.UserWallButton.Text = "Записи на стене";
-            this.UserWallButton.UseVisualStyleBackColor = true;
-            // 
-            // UserGroupButton
-            // 
-            this.UserGroupButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UserGroupButton.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.UserGroupButton.ForeColor = System.Drawing.Color.SteelBlue;
-            this.UserGroupButton.Location = new System.Drawing.Point(29, 200);
-            this.UserGroupButton.Name = "UserGroupButton";
-            this.UserGroupButton.Size = new System.Drawing.Size(152, 52);
-            this.UserGroupButton.TabIndex = 10;
-            this.UserGroupButton.Text = "подписок";
-            this.UserGroupButton.UseVisualStyleBackColor = true;
-            // 
-            // UserCountryLabel
-            // 
-            this.UserCountryLabel.AutoSize = true;
-            this.UserCountryLabel.Location = new System.Drawing.Point(20, 60);
-            this.UserCountryLabel.Name = "UserCountryLabel";
-            this.UserCountryLabel.Size = new System.Drawing.Size(0, 14);
-            this.UserCountryLabel.TabIndex = 11;
             // 
             // TabWall
             // 
             this.TabWall.Location = new System.Drawing.Point(4, 24);
             this.TabWall.Name = "TabWall";
-            this.TabWall.Size = new System.Drawing.Size(633, 400);
+            this.TabWall.Size = new System.Drawing.Size(633, 420);
             this.TabWall.TabIndex = 6;
             this.TabWall.Text = "Wall";
             this.TabWall.UseVisualStyleBackColor = true;
+            // 
+            // DialogPictureList
+            // 
+            this.DialogPictureList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.DialogPictureList.ImageSize = new System.Drawing.Size(16, 16);
+            this.DialogPictureList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // DialogDateLabel
+            // 
+            this.DialogDateLabel.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.DialogDateLabel.Location = new System.Drawing.Point(339, 16);
+            this.DialogDateLabel.Name = "DialogDateLabel";
+            this.DialogDateLabel.Size = new System.Drawing.Size(135, 20);
+            this.DialogDateLabel.TabIndex = 8;
+            this.DialogDateLabel.Text = "label1";
+            this.DialogDateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.DialogDateLabel.Visible = false;
+            this.DialogDateLabel.Click += new System.EventHandler(this.DialogDateLabel_Click);
+            // 
+            // DataColumn
+            // 
+            this.DataColumn.Text = "DataColumn";
+            this.DataColumn.Width = 163;
             // 
             // MainForm
             // 
@@ -349,11 +542,16 @@
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Page.ResumeLayout(false);
-            this.TabUserinfo.ResumeLayout(false);
+            this.TabUserInfo.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MyAvatarPicture)).EndInit();
+            this.TabConversations.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DialogPicture)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -363,10 +561,10 @@
         private System.Windows.Forms.ListBox ActionList;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.TabControl Page;
-        private System.Windows.Forms.TabPage TabUserinfo;
+        private System.Windows.Forms.TabPage TabUserInfo;
         private System.Windows.Forms.Label OnlineStatusLabel;
         private System.Windows.Forms.PictureBox MyAvatarPicture;
-        private System.Windows.Forms.TabPage TabMessages;
+        private System.Windows.Forms.TabPage TabConversations;
         private System.Windows.Forms.TabPage TabDialog;
         private System.Windows.Forms.TabPage TabGroups;
         private System.Windows.Forms.TabPage TabFriends;
@@ -384,5 +582,21 @@
         private System.Windows.Forms.Button UserFollowersButton;
         private System.Windows.Forms.Button UserFriendsButton;
         private System.Windows.Forms.TabPage TabWall;
+        private System.Windows.Forms.ListView ConversationsList;
+        private System.Windows.Forms.ImageList DialogPictureList;
+        private System.Windows.Forms.ColumnHeader ConversationName;
+        private System.Windows.Forms.ColumnHeader LastMessage;
+        private System.Windows.Forms.Button AddConversationButton;
+        private System.Windows.Forms.ColumnHeader UnreadedMessages;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button ReloadConversationButton;
+        private System.Windows.Forms.PictureBox DialogPicture;
+        private System.Windows.Forms.Label DialogTextPrevLabel;
+        private System.Windows.Forms.Label DialogTitleLabel;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label UreadedCountLabel;
+        private System.Windows.Forms.Label DialogGoLabel;
+        private System.Windows.Forms.Label DialogDateLabel;
+        private System.Windows.Forms.ColumnHeader DataColumn;
     }
 }

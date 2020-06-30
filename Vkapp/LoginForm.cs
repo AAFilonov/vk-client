@@ -35,7 +35,7 @@ namespace Vkapp
            // PasswordlTextbox.Text = "Aveemperor404";
             EmailTextbox.Text = "89208405463";
             PasswordlTextbox.Text = "Aveemperor1";
-            //   LoginAsync();
+            LoginAsync();
         }
 
 
@@ -58,10 +58,23 @@ namespace Vkapp
                 {
                     Login = EmailTextbox.Text,
                     Password = PasswordlTextbox.Text
-                  
+
                 });
-              
-                
+
+
+            }
+           
+            catch (VkNet.Exception.VkAuthorizationException)
+            {
+                AuthErrorLabel.ForeColor = Color.Red;
+                AuthErrorLabel.Text = "Неверный логин или пароль";
+                return;
+            }
+            catch (VkNet.AudioBypassService.Exceptions.VkAuthException)
+            {
+                AuthErrorLabel.ForeColor = Color.Red;
+                AuthErrorLabel.Text = "Неверный логин или пароль";
+                return;
             }
             catch (VkNet.Exception.CaptchaNeededException cEx)
             {
@@ -74,19 +87,14 @@ namespace Vkapp
 
                 // CapchaForm F = new CapchaForm(cEx);
             }
-            catch(VkNet.Exception.VkAuthorizationException)
+            catch (Exception e)
             {
                 AuthErrorLabel.ForeColor = Color.Red;
-                AuthErrorLabel.Text = "Неверный логин или пароль";
-                return;
+                AuthErrorLabel.Text = "Неизвестная ошибка";
+                await Task.Delay(3000);
+                Close();
             }
-            catch (VkNet.AudioBypassService.Exceptions.VkAuthException)
-            {
-                AuthErrorLabel.ForeColor = Color.Red;
-                AuthErrorLabel.Text = "Неверный логин или пароль";
-                return;
-            }
-            Close();
+                Close();
         }
         private void Auth_Click(object sender, EventArgs e)
         {
