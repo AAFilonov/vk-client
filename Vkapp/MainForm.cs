@@ -20,7 +20,7 @@ namespace Vkapp
 {
     public partial class MainForm : Form
     {
-       
+        long PageUserid;
    
         public MainForm()
         {
@@ -33,25 +33,50 @@ namespace Vkapp
             LoginForm login = new LoginForm();
             login.ShowDialog();           
         }
-
+        private string OnlineStatus(VkNet.Model.User User)
+        {
+            if ((bool)User.Online)
+            {
+               return "Online";
+            }
+            else
+            {
+                return "Был в сети \n" + User.LastSeen.Time.ToString();
+            }
+        }
         private void LoadUserinfo()
         {
         
-            User MyUser=  VK.api.Users.Get(new long[] { (long)VK.api.UserId }).FirstOrDefault();
+            var MyUser=  VK.api.Users.Get(new long[] {PageUserid },ProfileFields.All).FirstOrDefault();
 
 
             StatusLabel.Text = VK.api.Status.Get(MyUser.Id).Text;
             NameLabel.Text = MyUser.FirstName+" "+ MyUser.LastName;
-            string url = MyUser.PhotoMaxOrig.AbsolutePath;
-            MyAvatarPicture.Load(url);
+            OnlineStatusLabel.Text = OnlineStatus(MyUser);
+            if (MyUser.Country != null) UserCountryLabel.Text = MyUser.Country.ToString();
+            if(MyUser.City!=null) UserCountryLabel.Text +=  " " + MyUser.City;
+            MyAvatarPicture.Load(MyUser.PhotoMaxOrig.ToString());
+
+            UserFriendsButton.Text = MyUser.Counters.Friends.ToString()+" друзей";
+            UserFollowersButton.Text = MyUser.Counters.Followers.ToString() + " подпищиков";
+            UserPhotoButton.Text = MyUser.Counters.Photos.ToString() + " фотографий";
+            UserAudioButton.Text = MyUser.Counters.Audios.ToString() + " аудиозаписей";
+            UserGroupButton.Text = MyUser.Counters.Groups.ToString() + " групп";
+          
+
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            
             if (!VK.api.IsAuthorized)
                 Close();
             else
             {
-             //  LoadUserinfo();
+                PageUserid = (long)VK.api.UserId;
+
+                Page.SelectedTab = TabUserinfo;
+                LoadUserinfo();
+
 
             }
         }
@@ -68,20 +93,22 @@ namespace Vkapp
             switch (active)
             {
                 case 0:
-                    Page.SelectedTab = MyPage;
+                    PageUserid = (long)VK.api.UserId;
+                    Page.SelectedTab = TabUserinfo;
+                   
                     break;
                 case 1:
-                    Page.SelectedTab = Messages;
+                    Page.SelectedTab = TabMessages;
                     break;
                 
                 case 2:
-                    Page.SelectedTab = Groups;
+                    Page.SelectedTab = TabGroups;
                     break;
                 case 3:
-                    Page.SelectedTab = Friends;
+                    Page.SelectedTab = TabFriends;
                     break;
                 case 4:
-                    Page.SelectedTab =Settings;
+                    Page.SelectedTab =TabSettings;
                     break;
                 case 5:
                     DialogResult result = MessageBox.Show(
@@ -105,6 +132,37 @@ namespace Vkapp
             ActionList.ClearSelected();
         }
 
-      
+       
+
+        private void UserUpdateButton_Click(object sender, EventArgs e)
+        {
+            LoadUserinfo();
+        }
+
+        private void Page_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            switch (e.TabPageIndex)
+            {
+                case 0:
+                   
+                    LoadUserinfo();
+                    break;
+                case 1:
+                
+                    break;
+
+                case 2:
+                   
+                    break;
+                case 3:
+                   
+                    break;
+                case 4:
+                  
+                    break;
+                case 5:
+                    break;
+            }
+        }
     }
 }
