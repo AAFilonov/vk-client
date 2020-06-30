@@ -7,9 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
+
 using VkNet;
 using VkNet.Model;
 using VkNet.Enums.Filters;
+using VkNet.Model.RequestParams;
+using VkNet.AudioBypassService.Extensions;
+using VkNet.Abstractions;
 
 namespace Vkapp
 {
@@ -19,14 +24,14 @@ namespace Vkapp
    
         public MainForm()
         {
-            VK.api = new VkApi();
             InitializeComponent();
-           // this.Visible = false;
+
+            var services = new ServiceCollection();
+            services.AddAudioBypass();
+            VK.api = new VkApi(services);
+
             LoginForm login = new LoginForm();
-            login.ShowDialog();
-           
-           
-            
+            login.ShowDialog();           
         }
 
         private void LoadUserinfo()
@@ -46,7 +51,7 @@ namespace Vkapp
                 Close();
             else
             {
-               LoadUserinfo();
+             //  LoadUserinfo();
 
             }
         }

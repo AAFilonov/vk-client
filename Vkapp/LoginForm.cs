@@ -8,9 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VkNet;
+using Microsoft.Extensions.DependencyInjection;
+using VkNet.Abstractions;
+using VkNet.Utils;
 using VkNet.Model;
 using VkNet.Enums.Filters;
-
+using VkNet.AudioBypassService.Extensions;
 namespace Vkapp
 {
     public partial class LoginForm : Form
@@ -27,9 +30,9 @@ namespace Vkapp
         private void Form1_Load(object sender, EventArgs e)
         {
           
-            EmailTextbox.Text = "79003557072";
+            EmailTextbox.Text = "+79003557072";
             PasswordlTextbox.Text = "Aveemperor404";
-            LoginAsync();
+         //   LoginAsync();
         }
 
 
@@ -38,13 +41,22 @@ namespace Vkapp
 
             try
             {
-                await VK.api.AuthorizeAsync(new ApiAuthParams
+              
+
+                // Авторизируемся для получения токена валидного для вызова методов Audio / Messages
+               await VK.api.AuthorizeAsync(new ApiAuthParams
                 {
-                    ApplicationId = 7429505,
                     Login = EmailTextbox.Text,
-                    Password = PasswordlTextbox.Text,
-                    Settings = Settings.Groups
+                    Password = PasswordlTextbox.Text
+                  
                 });
+               // await VK.api.AuthorizeAsync(new ApiAuthParams
+               // {
+               //    ApplicationId = 7526098,
+               //     Login = EmailTextbox.Text,
+               //     Password = PasswordlTextbox.Text,
+               //    Settings = Settings.All
+               // });
                 
             }
             catch(VkNet.Exception.VkAuthorizationException)
