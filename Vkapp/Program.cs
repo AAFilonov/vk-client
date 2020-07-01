@@ -17,6 +17,7 @@ namespace Vkapp
     {
         public  static IVkApi api;
     }
+    
     static class Program
     {    
     

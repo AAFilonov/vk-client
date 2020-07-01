@@ -24,17 +24,132 @@ namespace Vkapp
     {
         long PageUserid;
         ulong? TotalDialogsCount;
-        List<DialogInfo> DialogsList;
-        public struct DialogInfo
+      
+        List<MyDialog> DialogsList;
+    
+        private void ObjListInit()
         {
-            public Conversation C;
-            public VkNet.Model.Message LastMessage;
+            ObjDialogList.OwnerDraw = true;
+            ObjDialogList.HeaderStyle = ColumnHeaderStyle.None; 
+            ObjDialogList.RowHeight = 60;
+
+            //Creating the columns
+            BrightIdeasSoftware.OLVColumn PictureColumn = new BrightIdeasSoftware.OLVColumn();
+            BrightIdeasSoftware.OLVColumn TitleColumn = new BrightIdeasSoftware.OLVColumn();
+            BrightIdeasSoftware.OLVColumn PrevColumn = new BrightIdeasSoftware.OLVColumn();
+            BrightIdeasSoftware.OLVColumn UnreadMsgColumn = new BrightIdeasSoftware.OLVColumn();
+            BrightIdeasSoftware.OLVColumn DateColumn = new BrightIdeasSoftware.OLVColumn();
+
+            //Adding the columns to the Objectlistview
+            ObjDialogList.AllColumns.Add(PictureColumn);
+            ObjDialogList.AllColumns.Add(TitleColumn);
+            ObjDialogList.AllColumns.Add(PrevColumn);
+            ObjDialogList.AllColumns.Add(UnreadMsgColumn);
+            ObjDialogList.AllColumns.Add(DateColumn);
+
+            //Directing the columns to the correct variable names. 
+
+            PictureColumn.ImageAspectName = "image";
+            TitleColumn.AspectName = "Title";
+            PrevColumn.AspectName = "Prev";
+            UnreadMsgColumn.AspectName = "UnreadMsg";
+            DateColumn.AspectName = "Date";
+
+     
+            //Setting the header name on each column
+             PictureColumn.Text = "Image";
+            TitleColumn.Text = "Title";
+            PrevColumn.Text = "Prev";
+            UnreadMsgColumn.Text = "UnreadMsg";
+            DateColumn.Text = "Date";
+            //Set the columns to fill the width of the objectlistview
+
+            PictureColumn.FillsFreeSpace = true;
+            PrevColumn.FillsFreeSpace = true;
+           // UnreadMsgColumn.FillsFreeSpace = true;
+            DateColumn.FillsFreeSpace = true;
+
+            PictureColumn.AspectToStringConverter = delegate (object x) {
+                return String.Empty;
+            };
+
+
+            DateColumn.AspectToStringConverter = delegate (object x) {
+                DateTime t = (DateTime)x;
+                t= t.AddHours(3);
+                var now = DateTime.Now;
+                var difference = now.Subtract(t);
+
+                if (difference.Days == 0)
+                {
+                    return t.ToShortTimeString();
+                }
+                else if (t.Year <= now.Year)
+                {
+                    return t.Day.ToString() + "." + t.ToString("MMM");
+                }
+                else
+                {
+                    return t.Date.ToString();
+                }
+            };
+
+
+
+            ObjDialogList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+                    PictureColumn,
+                    TitleColumn,
+                    PrevColumn,
+                    UnreadMsgColumn,
+                    DateColumn
+                });
+            ObjDialogList.PrimarySortColumn = DateColumn;
+            ObjDialogList.Sorting = SortOrder.Descending;
+        }
+      
+        public MainForm()
+        {
+            InitializeComponent();
+
+            var services = new ServiceCollection();
+            services.AddAudioBypass();
+            VK.api = new VkApi(services);
+
+            LoginForm login = new LoginForm();
+            login.ShowDialog();
+
+            DialogsList = new List<MyDialog>();
+            DialogPictureList = new ImageList();
+            DialogPictureList.ImageSize = new Size(50, 50);
+            DialogPictureList.ColorDepth = ColorDepth.Depth32Bit;
+            TotalDialogsCount = 0;
+
+
+        }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+            if (!VK.api.IsAuthorized)
+                Close();
+            else
+            {
+                PageUserid = (long)VK.api.UserId;
+                Page.SelectedTab = TabConversations;
+                LoadUserinfo();
+
+                ObjListInit();
+                DialogsAddAsync();
+            }
+
         }
 
 
-        private async void DialogsAddAsync()
+
+
+
+        private async void DialogsAddAsync( )
         {
-            const int AddCount = 20;
+            const ulong AddCount = 20;
             Task<GetConversationsResult> outerTask = VK.api.Messages.GetConversationsAsync(new GetConversationsParams
             {
                 Count = AddCount,
@@ -47,43 +162,44 @@ namespace Vkapp
                 results = task.Result;
                 foreach (var i in results.Items)
                 {
-                    DialogsList.Add(new DialogInfo { C = i.Conversation, LastMessage = i.LastMessage });
-                    TotalDialogsCount++;
-                    ConversationsList.Items.Add(ConvInfoLoad(DialogsList.Last()));
+                     DialogsList.Add(new MyDialog(i.Conversation, i.LastMessage));
+                     //DialogPictureList.Images.Add(DialogsList.Last().Name, LoadImageFromUrl(DialogsList.Last().PicUrl));
                 }
             });
+            ObjDialogList.AddObjects(DialogsList);
+            TotalDialogsCount+=AddCount;
 
         }
-
-
-        private async Task DialogsLMUpdateAsync()
+        private async void DialogsUpdAsync()
         {
-
-            List<ulong> IDs = new List<ulong>();
-            List<string> fields = new List<string> { "All" };
-            await Task.Run(() =>
+         
+            Task<GetConversationsResult> outerTask = VK.api.Messages.GetConversationsAsync(new GetConversationsParams
             {
-                foreach (var i in DialogsList)
-                {
-                    IDs.Add((ulong)i.C.Peer.Id);
-                }
+                Count = TotalDialogsCount,
+                Offset = 0,
+                Fields = new List<string> { "All" }
             });
-            GetByConversationMessageIdResult results = new GetByConversationMessageIdResult();
-            var outerTask = VK.api.Messages.GetByConversationMessageIdAsync((long)VK.api.UserId, IDs, fields);
+            GetConversationsResult results = new GetConversationsResult();
             await outerTask.ContinueWith(task =>
             {
                 results = task.Result;
-                for (int i = 0; i < DialogsList.Count; i++)
+
+                for (var i =0;i<DialogsList.Count;i++)
                 {
-                    var tmp = DialogsList[i];
-                    tmp.LastMessage = results.Items[i];
-                    DialogsList[i] = tmp;
-                    ConvInfoUpdate(ConversationsList.Items.Find( tmp.C.Peer.Id.ToString(),false).FirstOrDefault(),tmp);
+                   DialogsList[i].UpdateInfo(results.Items[i].LastMessage, results.Items[i].Conversation);
+
                 }
             });
+            ObjDialogList.UpdateObjects(DialogsList);
+
 
         }
 
+
+       
+
+     
+        /*
         private void ConversationsList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (ConversationsList.SelectedItems.Count > 0)
@@ -105,6 +221,7 @@ namespace Vkapp
                 DialogGoLabel.Visible = true;
             }
         }
+        */
         private void ActionList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ActionList.Focus();
@@ -158,7 +275,7 @@ namespace Vkapp
                     LoadUserinfo();
                     break;
                 case "TabConversations":
-                    ConversationsList.Items.Clear();
+                   
 
                     break;
 
@@ -180,7 +297,20 @@ namespace Vkapp
             }
         }
 
-        private string DateSince(DateTime t)
+
+        private System.Drawing.Image LoadImageFromUrl(string url)
+        {
+
+            WebClient client = new WebClient();
+            byte[] imageByte = client.DownloadData(url);
+            MemoryStream stream = new MemoryStream(imageByte);
+            System.Drawing.Image im = System.Drawing.Image.FromStream(stream);
+            return im;
+        }
+
+
+        /*
+           private string DateSince(DateTime t)
         {
 
             var now = DateTime.Now;
@@ -200,35 +330,7 @@ namespace Vkapp
             }
 
         }
-        private System.Drawing.Image LoadImageFromUrl(string url)
-        {
-
-            WebClient client = new WebClient();
-            byte[] imageByte = client.DownloadData(url);
-            MemoryStream stream = new MemoryStream(imageByte);
-            System.Drawing.Image im = System.Drawing.Image.FromStream(stream);
-            return im;
-        }
-        public MainForm()
-        {
-            InitializeComponent();
-
-            var services = new ServiceCollection();
-            services.AddAudioBypass();
-            VK.api = new VkApi(services);
-
-            LoginForm login = new LoginForm();
-            login.ShowDialog();
-            DialogPictureList = new ImageList();
-            DialogPictureList.ImageSize = new Size(100, 100);
-            DialogPictureList.ColorDepth = ColorDepth.Depth32Bit;
-            TotalDialogsCount = 0;
-            DialogsList = new List<DialogInfo>();
-           
-        }
-
-
-        private ListViewItem ConvInfoUpdate(ListViewItem item,DialogInfo i)
+       private ListViewItem ConvInfoUpdate(ListViewItem item,DialogInfo i)
         {
             string messageprev = i.LastMessage.Text;
             if (messageprev == "")
@@ -254,7 +356,7 @@ namespace Vkapp
             item.SubItems[2].Text = DateSince((DateTime)i.LastMessage.Date); 
             return item;
         }
-        private ListViewItem ConvInfoLoad(DialogInfo i)
+       //private ListViewItem ConvInfoLoad(MyDialog i)
         {
             ListViewItem tmp = new ListViewItem();
            
@@ -319,7 +421,7 @@ namespace Vkapp
             ConversationsList.Items.Add(tmp);
             return tmp;
         }
-
+        */
 
         private void LoadUserinfo()
         {
@@ -345,12 +447,10 @@ namespace Vkapp
         }
         private void AddConversationButton_Click(object sender, EventArgs e)
         {
+            
             DialogsAddAsync();
         }
-        private void ReloadConversationButton_Click(object sender, EventArgs e)
-        {
-
-        }
+ 
         private async void LogOutAsync()
         {
             await VK.api.LogOutAsync();
@@ -366,23 +466,12 @@ namespace Vkapp
                 return "Был в сети \n" + User.LastSeen.Time.ToString();
             }
         }
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-            if (!VK.api.IsAuthorized)
-                Close();
-            else
-            {
-                PageUserid = (long)VK.api.UserId;
-                Page.SelectedTab = TabUserInfo;
-                LoadUserinfo();
-            }
-        }
-     
+       
 
         private void UpdateConversationButton_Click(object sender, EventArgs e)
         {
 
+            DialogsUpdAsync();
         }
     }
 }
