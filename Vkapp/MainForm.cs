@@ -19,114 +19,71 @@ using System.IO;
 
 namespace Vkapp
 {
+
     public partial class MainForm : Form
     {
         long PageUserid;
-        ulong? LastConversation;
-        public MainForm()
+        ulong? TotalDialogsCount;
+        List<DialogInfo> DialogsList;
+        public struct DialogInfo
         {
-            InitializeComponent();
-
-            var services = new ServiceCollection();
-            services.AddAudioBypass();
-            VK.api = new VkApi(services);
-
-            LoginForm login = new LoginForm();
-            login.ShowDialog();
-            DialogPictureList = new ImageList();
-            DialogPictureList.ImageSize = new Size(100, 100);
-            DialogPictureList.ColorDepth = ColorDepth.Depth32Bit;
-            LastConversation = 0;
-            
+            public Conversation C;
+            public VkNet.Model.Message LastMessage;
         }
-        private void MainForm_Load(object sender, EventArgs e)
-        {
 
-            if (!VK.api.IsAuthorized)
-                Close();
-            else
+
+        private async void DialogsAddAsync()
+        {
+            const int AddCount = 20;
+            Task<GetConversationsResult> outerTask = VK.api.Messages.GetConversationsAsync(new GetConversationsParams
             {
-                PageUserid = (long)VK.api.UserId;
-                Page.SelectedTab = TabUserInfo;
-                LoadUserinfo();
-            }
+                Count = AddCount,
+                Offset = TotalDialogsCount,
+                Fields = new List<string> { "All" }
+            });
+            GetConversationsResult results = new GetConversationsResult();
+            await outerTask.ContinueWith(task =>
+            {
+                results = task.Result;
+                foreach (var i in results.Items)
+                {
+                    DialogsList.Add(new DialogInfo { C = i.Conversation, LastMessage = i.LastMessage });
+                    TotalDialogsCount++;
+                    ConversationsList.Items.Add(ConvInfoLoad(DialogsList.Last()));
+                }
+            });
+
         }
-      
-        private async void LoadMessagesList(ulong? n, ulong? offset)
+
+
+        private async Task DialogsLMUpdateAsync()
         {
 
-            GetConversationsResult Conversations = new GetConversationsResult();
-           Task <GetConversationsResult> outerTask = VK.api.Messages.GetConversationsAsync(new GetConversationsParams { Count = n, Offset = offset, Extended = true});
-
-           await outerTask.ContinueWith(task =>{Conversations = task.Result;});
-            foreach (var i in Conversations.Items)
+            List<ulong> IDs = new List<ulong>();
+            List<string> fields = new List<string> { "All" };
+            await Task.Run(() =>
             {
-
-                ListViewItem tmp = new ListViewItem();
-                var settings = i.Conversation.ChatSettings;
-                string pic_url= "https://vk.com/images/camera_100.png";
-                //Заголовок Диалога и задания url пикчи
-                if (i.Conversation.Peer.Type.ToString() == "user")
+                foreach (var i in DialogsList)
                 {
-                    var usr = VK.api.Users.Get(new long[] { i.Conversation.Peer.Id }, ProfileFields.FirstName | ProfileFields.LastName | ProfileFields.Photo100).SingleOrDefault();
-                    tmp.Text = usr.FirstName + " " + usr.LastName;
-                    pic_url = usr.Photo100.ToString();
-
+                    IDs.Add((ulong)i.C.Peer.Id);
                 }
-                else if (i.Conversation.Peer.Type.ToString() == "chat")
+            });
+            GetByConversationMessageIdResult results = new GetByConversationMessageIdResult();
+            var outerTask = VK.api.Messages.GetByConversationMessageIdAsync((long)VK.api.UserId, IDs, fields);
+            await outerTask.ContinueWith(task =>
+            {
+                results = task.Result;
+                for (int i = 0; i < DialogsList.Count; i++)
                 {
-                    tmp.Text = i.Conversation.ChatSettings.Title;
-                    var PicUrl = i.Conversation.ChatSettings.Photo.Photo100;
-                    if(PicUrl != null) pic_url =PicUrl.ToString();
-
+                    var tmp = DialogsList[i];
+                    tmp.LastMessage = results.Items[i];
+                    DialogsList[i] = tmp;
+                    ConvInfoUpdate(ConversationsList.Items.Find( tmp.C.Peer.Id.ToString(),false).FirstOrDefault(),tmp);
                 }
-                else if (i.Conversation.Peer.Type.ToString() == "group")
-                {
-                    tmp.Text = "Группа";
-                }
+            });
 
-                string messageprev = i.LastMessage.Text;
-
-                if (messageprev == "")
-                {
-                    var attachm = i.LastMessage.Attachments.FirstOrDefault();
-                    if (attachm == null)
-                    {
-                        messageprev = "Пересланное сообщение";
-                    }
-                    else
-                    {
-                        messageprev = attachm.Type.Name.ToString();
-                    }
-
-
-                }
-                var user = VK.api.Users.Get(new long[] { i.LastMessage.FromId.Value }, ProfileFields.FirstName | ProfileFields.LastName | ProfileFields.Photo100).SingleOrDefault();
-
-                messageprev = (user.Id == VK.api.UserId ? "Вы" : user.FirstName + " " + user.LastName  ) + ": " + messageprev;
-                //Превью Сообщения
-                tmp.SubItems.Add(new ListViewItem.ListViewSubItem
-                {
-                    Text = messageprev
-                });
-                //Количество непрочитанных сообщений
-                tmp.SubItems.Add(new ListViewItem.ListViewSubItem
-                {
-                    Text = i.Conversation.UnreadCount.ToString()
-                });
-                //Дата
-                tmp.SubItems.Add(new ListViewItem.ListViewSubItem
-                {
-                    Text = DateSince((DateTime)i.LastMessage.Date)
-                });
-                WebClient w = new WebClient();
-
-                DialogPictureList.Images.Add(tmp.Text, LoadImageFromUrl(pic_url));
-                ConversationsList.Items.Add(tmp);
-            }
         }
 
-       
         private void ConversationsList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (ConversationsList.SelectedItems.Count > 0)
@@ -135,8 +92,8 @@ namespace Vkapp
                 DialogTitleLabel.Text = Dialog.Text;
                 DialogTextPrevLabel.Text = Dialog.SubItems[1].Text;
                 UreadedCountLabel.Text = Dialog.SubItems[2].Text;
-                DialogDateLabel.Text =Dialog.SubItems[3].Text;
-                if (UreadedCountLabel.Text != "" )
+                DialogDateLabel.Text = Dialog.SubItems[3].Text;
+                if (UreadedCountLabel.Text != "")
                     UreadedCountLabel.Visible = true;
                 else
                     UreadedCountLabel.Visible = false;
@@ -202,9 +159,7 @@ namespace Vkapp
                     break;
                 case "TabConversations":
                     ConversationsList.Items.Clear();
-                    LastConversation = 0;
-                    LoadMessagesList(20, LastConversation);
-                    LastConversation += 20;
+
                     break;
 
                 case "TabDialog":
@@ -254,6 +209,118 @@ namespace Vkapp
             System.Drawing.Image im = System.Drawing.Image.FromStream(stream);
             return im;
         }
+        public MainForm()
+        {
+            InitializeComponent();
+
+            var services = new ServiceCollection();
+            services.AddAudioBypass();
+            VK.api = new VkApi(services);
+
+            LoginForm login = new LoginForm();
+            login.ShowDialog();
+            DialogPictureList = new ImageList();
+            DialogPictureList.ImageSize = new Size(100, 100);
+            DialogPictureList.ColorDepth = ColorDepth.Depth32Bit;
+            TotalDialogsCount = 0;
+            DialogsList = new List<DialogInfo>();
+           
+        }
+
+
+        private ListViewItem ConvInfoUpdate(ListViewItem item,DialogInfo i)
+        {
+            string messageprev = i.LastMessage.Text;
+            if (messageprev == "")
+            {
+                var attachm = i.LastMessage.Attachments.FirstOrDefault();
+                if (attachm == null)
+                {
+                    messageprev = "Пересланное сообщение";
+                }
+                else
+                {
+                    messageprev = attachm.Type.Name.ToString();
+                }
+
+            }
+            var user = VK.api.Users.Get(new long[] { i.LastMessage.FromId.Value }, ProfileFields.FirstName | ProfileFields.LastName | ProfileFields.Photo100).SingleOrDefault();
+            messageprev = (user.Id == VK.api.UserId ? "Вы" : user.FirstName + " " + user.LastName) + ": " + messageprev;
+            //Превью Сообщения
+            item.SubItems[0].Text = messageprev;
+            //Количество непрочитанных сообщений
+            item.SubItems[1].Text = i.C.UnreadCount.ToString();
+            //Дата
+            item.SubItems[2].Text = DateSince((DateTime)i.LastMessage.Date); 
+            return item;
+        }
+        private ListViewItem ConvInfoLoad(DialogInfo i)
+        {
+            ListViewItem tmp = new ListViewItem();
+           
+            string pic_url = "https://vk.com/images/camera_100.png";
+
+            //Заголовок Диалога и задания url пикчи
+            if (i.C.Peer.Type.ToString() == "user")
+            {
+                var usr = VK.api.Users.Get(new long[] { i.C.Peer.Id }, ProfileFields.FirstName | ProfileFields.LastName | ProfileFields.Photo100).SingleOrDefault();
+                tmp.Text = usr.FirstName + " " + usr.LastName;
+                pic_url = usr.Photo100.ToString();
+
+            }
+            else if (i.C.Peer.Type.ToString() == "chat")
+            {
+                tmp.Text = i.C.ChatSettings.Title;
+                var PicUrl = i.C.ChatSettings.Photo.Photo100;
+                if (PicUrl != null) pic_url = PicUrl.ToString();
+
+            }
+            else if (i.C.Peer.Type.ToString() == "group")
+            {
+                tmp.Text = "Группа";
+            }
+            tmp.Name = i.C.Peer.Id.ToString();
+           string messageprev = i.LastMessage.Text;
+
+            if (messageprev == "")
+            {
+                var attachm = i.LastMessage.Attachments.FirstOrDefault();
+                if (attachm == null)
+                {
+                    messageprev = "Пересланное сообщение";
+                }
+                else
+                {
+                    messageprev = attachm.Type.Name.ToString();
+                }
+
+            }
+            var user = VK.api.Users.Get(new long[] { i.LastMessage.FromId.Value }, ProfileFields.FirstName | ProfileFields.LastName | ProfileFields.Photo100).SingleOrDefault();
+
+            messageprev = (user.Id == VK.api.UserId ? "Вы" : user.FirstName + " " + user.LastName) + ": " + messageprev;
+            //Превью Сообщения
+            tmp.SubItems.Add(new ListViewItem.ListViewSubItem
+            {
+                Text = messageprev
+            });
+            //Количество непрочитанных сообщений
+            tmp.SubItems.Add(new ListViewItem.ListViewSubItem
+            {
+                Text = i.C.UnreadCount.ToString()
+            });
+            //Дата
+            tmp.SubItems.Add(new ListViewItem.ListViewSubItem
+            {
+                Text = DateSince((DateTime)i.LastMessage.Date)
+            });
+            WebClient w = new WebClient();
+
+            DialogPictureList.Images.Add(tmp.Text, LoadImageFromUrl(pic_url));
+            ConversationsList.Items.Add(tmp);
+            return tmp;
+        }
+
+
         private void LoadUserinfo()
         {
 
@@ -278,13 +345,11 @@ namespace Vkapp
         }
         private void AddConversationButton_Click(object sender, EventArgs e)
         {
-            LoadMessagesList(20, LastConversation);
-            LastConversation += 20;
+            DialogsAddAsync();
         }
         private void ReloadConversationButton_Click(object sender, EventArgs e)
         {
-            ConversationsList.Items.Clear();
-            LoadMessagesList(LastConversation, 0);
+
         }
         private async void LogOutAsync()
         {
@@ -301,8 +366,21 @@ namespace Vkapp
                 return "Был в сети \n" + User.LastSeen.Time.ToString();
             }
         }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
 
-        private void DialogDateLabel_Click(object sender, EventArgs e)
+            if (!VK.api.IsAuthorized)
+                Close();
+            else
+            {
+                PageUserid = (long)VK.api.UserId;
+                Page.SelectedTab = TabUserInfo;
+                LoadUserinfo();
+            }
+        }
+     
+
+        private void UpdateConversationButton_Click(object sender, EventArgs e)
         {
 
         }

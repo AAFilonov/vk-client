@@ -50,8 +50,9 @@
             this.TabConversations = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.AddConversationButton = new System.Windows.Forms.Button();
-            this.ReloadConversationButton = new System.Windows.Forms.Button();
+            this.UpdateConversationButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.DialogDateLabel = new System.Windows.Forms.Label();
             this.DialogGoLabel = new System.Windows.Forms.Label();
             this.UreadedCountLabel = new System.Windows.Forms.Label();
             this.DialogPicture = new System.Windows.Forms.PictureBox();
@@ -61,14 +62,18 @@
             this.ConversationName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LastMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.UnreadedMessages = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DataColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TabDialog = new System.Windows.Forms.TabPage();
             this.TabGroups = new System.Windows.Forms.TabPage();
             this.TabFriends = new System.Windows.Forms.TabPage();
             this.TabSettings = new System.Windows.Forms.TabPage();
             this.TabWall = new System.Windows.Forms.TabPage();
             this.DialogPictureList = new System.Windows.Forms.ImageList(this.components);
-            this.DialogDateLabel = new System.Windows.Forms.Label();
-            this.DataColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
+            this.TitleColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.PrevColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.UreadMsgColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.DateColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.Page.SuspendLayout();
             this.TabUserInfo.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -78,6 +83,7 @@
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DialogPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             this.SuspendLayout();
             // 
             // ActionList
@@ -303,6 +309,7 @@
             // 
             // TabConversations
             // 
+            this.TabConversations.Controls.Add(this.objectListView1);
             this.TabConversations.Controls.Add(this.panel4);
             this.TabConversations.Controls.Add(this.panel3);
             this.TabConversations.Controls.Add(this.ConversationsList);
@@ -316,9 +323,9 @@
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.SystemColors.Info;
+            this.panel4.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel4.Controls.Add(this.AddConversationButton);
-            this.panel4.Controls.Add(this.ReloadConversationButton);
+            this.panel4.Controls.Add(this.UpdateConversationButton);
             this.panel4.Location = new System.Drawing.Point(498, 7);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(129, 114);
@@ -339,24 +346,24 @@
             this.AddConversationButton.UseVisualStyleBackColor = false;
             this.AddConversationButton.Click += new System.EventHandler(this.AddConversationButton_Click);
             // 
-            // ReloadConversationButton
+            // UpdateConversationButton
             // 
-            this.ReloadConversationButton.BackColor = System.Drawing.Color.Transparent;
-            this.ReloadConversationButton.FlatAppearance.BorderSize = 0;
-            this.ReloadConversationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ReloadConversationButton.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Underline);
-            this.ReloadConversationButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ReloadConversationButton.Location = new System.Drawing.Point(3, 55);
-            this.ReloadConversationButton.Name = "ReloadConversationButton";
-            this.ReloadConversationButton.Size = new System.Drawing.Size(123, 37);
-            this.ReloadConversationButton.TabIndex = 2;
-            this.ReloadConversationButton.Text = "Обновить";
-            this.ReloadConversationButton.UseVisualStyleBackColor = false;
-            this.ReloadConversationButton.Click += new System.EventHandler(this.ReloadConversationButton_Click);
+            this.UpdateConversationButton.BackColor = System.Drawing.Color.Transparent;
+            this.UpdateConversationButton.FlatAppearance.BorderSize = 0;
+            this.UpdateConversationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateConversationButton.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Underline);
+            this.UpdateConversationButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.UpdateConversationButton.Location = new System.Drawing.Point(3, 55);
+            this.UpdateConversationButton.Name = "UpdateConversationButton";
+            this.UpdateConversationButton.Size = new System.Drawing.Size(123, 37);
+            this.UpdateConversationButton.TabIndex = 2;
+            this.UpdateConversationButton.Text = "Обновить";
+            this.UpdateConversationButton.UseVisualStyleBackColor = false;
+            this.UpdateConversationButton.Click += new System.EventHandler(this.UpdateConversationButton_Click);
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.SystemColors.Info;
+            this.panel3.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel3.Controls.Add(this.DialogDateLabel);
             this.panel3.Controls.Add(this.DialogGoLabel);
             this.panel3.Controls.Add(this.UreadedCountLabel);
@@ -367,6 +374,17 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(495, 114);
             this.panel3.TabIndex = 2;
+            // 
+            // DialogDateLabel
+            // 
+            this.DialogDateLabel.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.DialogDateLabel.Location = new System.Drawing.Point(339, 16);
+            this.DialogDateLabel.Name = "DialogDateLabel";
+            this.DialogDateLabel.Size = new System.Drawing.Size(135, 20);
+            this.DialogDateLabel.TabIndex = 8;
+            this.DialogDateLabel.Text = "label1";
+            this.DialogDateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.DialogDateLabel.Visible = false;
             // 
             // DialogGoLabel
             // 
@@ -424,7 +442,7 @@
             // 
             // ConversationsList
             // 
-            this.ConversationsList.BackColor = System.Drawing.SystemColors.Info;
+            this.ConversationsList.BackColor = System.Drawing.SystemColors.HighlightText;
             this.ConversationsList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ConversationsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ConversationName,
@@ -436,10 +454,10 @@
             this.ConversationsList.HideSelection = false;
             this.ConversationsList.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.ConversationsList.LabelWrap = false;
-            this.ConversationsList.Location = new System.Drawing.Point(0, 127);
+            this.ConversationsList.Location = new System.Drawing.Point(412, 127);
             this.ConversationsList.MultiSelect = false;
             this.ConversationsList.Name = "ConversationsList";
-            this.ConversationsList.Size = new System.Drawing.Size(627, 267);
+            this.ConversationsList.Size = new System.Drawing.Size(215, 267);
             this.ConversationsList.TabIndex = 0;
             this.ConversationsList.UseCompatibleStateImageBehavior = false;
             this.ConversationsList.View = System.Windows.Forms.View.Details;
@@ -453,12 +471,17 @@
             // LastMessage
             // 
             this.LastMessage.Text = "ConversationLastMessage";
-            this.LastMessage.Width = 278;
+            this.LastMessage.Width = 361;
             // 
             // UnreadedMessages
             // 
             this.UnreadedMessages.Text = "Непрочитанных сообщений";
-            this.UnreadedMessages.Width = 53;
+            this.UnreadedMessages.Width = 56;
+            // 
+            // DataColumn
+            // 
+            this.DataColumn.Text = "DataColumn";
+            this.DataColumn.Width = 163;
             // 
             // TabDialog
             // 
@@ -511,22 +534,41 @@
             this.DialogPictureList.ImageSize = new System.Drawing.Size(16, 16);
             this.DialogPictureList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // DialogDateLabel
+            // objectListView1
             // 
-            this.DialogDateLabel.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.DialogDateLabel.Location = new System.Drawing.Point(339, 16);
-            this.DialogDateLabel.Name = "DialogDateLabel";
-            this.DialogDateLabel.Size = new System.Drawing.Size(135, 20);
-            this.DialogDateLabel.TabIndex = 8;
-            this.DialogDateLabel.Text = "label1";
-            this.DialogDateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.DialogDateLabel.Visible = false;
-            this.DialogDateLabel.Click += new System.EventHandler(this.DialogDateLabel_Click);
+            this.objectListView1.AllColumns.Add(this.TitleColumn);
+            this.objectListView1.AllColumns.Add(this.PrevColumn);
+            this.objectListView1.AllColumns.Add(this.UreadMsgColumn);
+            this.objectListView1.AllColumns.Add(this.DateColumn);
+            this.objectListView1.CellEditUseWholeCell = false;
+            this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.TitleColumn,
+            this.PrevColumn,
+            this.UreadMsgColumn,
+            this.DateColumn});
+            this.objectListView1.HideSelection = false;
+            this.objectListView1.Location = new System.Drawing.Point(6, 126);
+            this.objectListView1.Name = "objectListView1";
+            this.objectListView1.Size = new System.Drawing.Size(340, 268);
+            this.objectListView1.TabIndex = 3;
+            this.objectListView1.UseCompatibleStateImageBehavior = false;
+            this.objectListView1.View = System.Windows.Forms.View.Details;
             // 
-            // DataColumn
+            // TitleColumn
             // 
-            this.DataColumn.Text = "DataColumn";
-            this.DataColumn.Width = 163;
+            this.TitleColumn.Text = "Title";
+            // 
+            // PrevColumn
+            // 
+            this.PrevColumn.Text = "Prev";
+            // 
+            // UreadMsgColumn
+            // 
+            this.UreadMsgColumn.Text = "UreadMsg";
+            // 
+            // DateColumn
+            // 
+            this.DateColumn.Text = "Date";
             // 
             // MainForm
             // 
@@ -552,6 +594,7 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DialogPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -589,7 +632,7 @@
         private System.Windows.Forms.Button AddConversationButton;
         private System.Windows.Forms.ColumnHeader UnreadedMessages;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button ReloadConversationButton;
+        private System.Windows.Forms.Button UpdateConversationButton;
         private System.Windows.Forms.PictureBox DialogPicture;
         private System.Windows.Forms.Label DialogTextPrevLabel;
         private System.Windows.Forms.Label DialogTitleLabel;
@@ -598,5 +641,10 @@
         private System.Windows.Forms.Label DialogGoLabel;
         private System.Windows.Forms.Label DialogDateLabel;
         private System.Windows.Forms.ColumnHeader DataColumn;
+        private BrightIdeasSoftware.ObjectListView objectListView1;
+        private BrightIdeasSoftware.OLVColumn TitleColumn;
+        private BrightIdeasSoftware.OLVColumn PrevColumn;
+        private BrightIdeasSoftware.OLVColumn UreadMsgColumn;
+        private BrightIdeasSoftware.OLVColumn DateColumn;
     }
 }
