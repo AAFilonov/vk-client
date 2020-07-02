@@ -57,6 +57,8 @@ static class D
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+           
+         
         }
     }
 }

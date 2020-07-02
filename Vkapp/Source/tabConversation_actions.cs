@@ -89,10 +89,8 @@ namespace Vkapp
             ObjDialogList.UpdateObjects(D.DialogsList);
         }
 
+     
 
-
-
-
-
+     
     }
 }

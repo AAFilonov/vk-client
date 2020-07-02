@@ -59,6 +59,7 @@ namespace Vkapp
             this.UpdateConversationButton = new System.Windows.Forms.Button();
             this.TabDialog = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.TabDialogOnlineLabel = new System.Windows.Forms.Label();
             this.TabDialogNameLabel = new System.Windows.Forms.Label();
             this.ActionButtonTabDialog = new System.Windows.Forms.Label();
@@ -76,6 +77,7 @@ namespace Vkapp
             this.BackArrow = new System.Windows.Forms.Label();
             this.DialogPictureList = new System.Windows.Forms.ImageList(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.MessagesListView = new BrightIdeasSoftware.ObjectListView();
             this.Page.SuspendLayout();
             this.TabUserInfo.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -87,7 +89,9 @@ namespace Vkapp
             this.TabDialog.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabdialogPictureBox)).BeginInit();
+            this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MessagesListView)).BeginInit();
             this.SuspendLayout();
             // 
             // ActionList
@@ -129,10 +133,10 @@ namespace Vkapp
             this.Page.Controls.Add(this.TabSettings);
             this.Page.Controls.Add(this.TabWall);
             this.Page.ItemSize = new System.Drawing.Size(50, 20);
-            this.Page.Location = new System.Drawing.Point(128, 12);
+            this.Page.Location = new System.Drawing.Point(128, 0);
             this.Page.Name = "Page";
             this.Page.SelectedIndex = 0;
-            this.Page.Size = new System.Drawing.Size(683, 461);
+            this.Page.Size = new System.Drawing.Size(683, 473);
             this.Page.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.Page.TabIndex = 2;
             this.Page.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.Page_Selecting);
@@ -148,7 +152,7 @@ namespace Vkapp
             this.TabUserInfo.Location = new System.Drawing.Point(4, 24);
             this.TabUserInfo.Name = "TabUserInfo";
             this.TabUserInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUserInfo.Size = new System.Drawing.Size(675, 433);
+            this.TabUserInfo.Size = new System.Drawing.Size(675, 445);
             this.TabUserInfo.TabIndex = 0;
             this.TabUserInfo.Text = "TabUserInfo";
             this.TabUserInfo.UseVisualStyleBackColor = true;
@@ -374,7 +378,7 @@ namespace Vkapp
             this.TabConversations.Location = new System.Drawing.Point(4, 24);
             this.TabConversations.Name = "TabConversations";
             this.TabConversations.Padding = new System.Windows.Forms.Padding(3);
-            this.TabConversations.Size = new System.Drawing.Size(675, 433);
+            this.TabConversations.Size = new System.Drawing.Size(675, 445);
             this.TabConversations.TabIndex = 1;
             this.TabConversations.Text = "Conversations";
             this.TabConversations.UseVisualStyleBackColor = true;
@@ -391,7 +395,7 @@ namespace Vkapp
             this.ObjDialogList.Name = "ObjDialogList";
             this.ObjDialogList.RowHeight = 50;
             this.ObjDialogList.ShowGroups = false;
-            this.ObjDialogList.Size = new System.Drawing.Size(663, 375);
+            this.ObjDialogList.Size = new System.Drawing.Size(663, 391);
             this.ObjDialogList.TabIndex = 3;
             this.ObjDialogList.UseCompatibleStateImageBehavior = false;
             this.ObjDialogList.View = System.Windows.Forms.View.Details;
@@ -402,7 +406,7 @@ namespace Vkapp
             this.panel4.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel4.Controls.Add(this.AddConversationButton);
             this.panel4.Controls.Add(this.UpdateConversationButton);
-            this.panel4.Location = new System.Drawing.Point(6, 387);
+            this.panel4.Location = new System.Drawing.Point(6, 401);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(663, 38);
             this.panel4.TabIndex = 3;
@@ -444,7 +448,7 @@ namespace Vkapp
             this.TabDialog.Controls.Add(this.panel3);
             this.TabDialog.Location = new System.Drawing.Point(4, 24);
             this.TabDialog.Name = "TabDialog";
-            this.TabDialog.Size = new System.Drawing.Size(675, 433);
+            this.TabDialog.Size = new System.Drawing.Size(675, 445);
             this.TabDialog.TabIndex = 2;
             this.TabDialog.Text = "TabDialog";
             this.TabDialog.UseVisualStyleBackColor = true;
@@ -452,6 +456,7 @@ namespace Vkapp
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.Window;
+            this.panel6.Controls.Add(this.label1);
             this.panel6.Controls.Add(this.TabDialogOnlineLabel);
             this.panel6.Controls.Add(this.TabDialogNameLabel);
             this.panel6.Controls.Add(this.ActionButtonTabDialog);
@@ -461,6 +466,18 @@ namespace Vkapp
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(655, 59);
             this.panel6.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label1.Location = new System.Drawing.Point(105, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(84, 20);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Обновить";
             // 
             // TabDialogOnlineLabel
             // 
@@ -507,6 +524,7 @@ namespace Vkapp
             // BackArrowButtonTabDialog
             // 
             this.BackArrowButtonTabDialog.AutoSize = true;
+            this.BackArrowButtonTabDialog.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BackArrowButtonTabDialog.Font = new System.Drawing.Font("Tahoma", 14F);
             this.BackArrowButtonTabDialog.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.BackArrowButtonTabDialog.Location = new System.Drawing.Point(16, 15);
@@ -518,9 +536,10 @@ namespace Vkapp
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.Window;
+            this.panel5.Controls.Add(this.MessagesListView);
             this.panel5.Location = new System.Drawing.Point(13, 69);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(658, 242);
+            this.panel5.Size = new System.Drawing.Size(658, 273);
             this.panel5.TabIndex = 4;
             // 
             // panel3
@@ -529,9 +548,9 @@ namespace Vkapp
             this.panel3.Controls.Add(this.RichTextBoxDialog);
             this.panel3.Controls.Add(this.ButtonAttacments);
             this.panel3.Controls.Add(this.ButtonSendDialog);
-            this.panel3.Location = new System.Drawing.Point(13, 317);
+            this.panel3.Location = new System.Drawing.Point(13, 348);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(658, 100);
+            this.panel3.Size = new System.Drawing.Size(658, 94);
             this.panel3.TabIndex = 3;
             // 
             // RichTextBoxDialog
@@ -558,19 +577,22 @@ namespace Vkapp
             // 
             // ButtonSendDialog
             // 
-            this.ButtonSendDialog.Location = new System.Drawing.Point(580, 11);
+            this.ButtonSendDialog.BackColor = System.Drawing.Color.SteelBlue;
+            this.ButtonSendDialog.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ButtonSendDialog.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ButtonSendDialog.Location = new System.Drawing.Point(580, 14);
             this.ButtonSendDialog.Name = "ButtonSendDialog";
             this.ButtonSendDialog.Size = new System.Drawing.Size(75, 23);
             this.ButtonSendDialog.TabIndex = 1;
             this.ButtonSendDialog.Text = "Отправить";
-            this.ButtonSendDialog.UseVisualStyleBackColor = true;
+            this.ButtonSendDialog.UseVisualStyleBackColor = false;
             this.ButtonSendDialog.Click += new System.EventHandler(this.ButtonSendDialog_Click);
             // 
             // TabGroups
             // 
             this.TabGroups.Location = new System.Drawing.Point(4, 24);
             this.TabGroups.Name = "TabGroups";
-            this.TabGroups.Size = new System.Drawing.Size(675, 433);
+            this.TabGroups.Size = new System.Drawing.Size(675, 445);
             this.TabGroups.TabIndex = 4;
             this.TabGroups.Text = "TabGroups";
             this.TabGroups.UseVisualStyleBackColor = true;
@@ -579,7 +601,7 @@ namespace Vkapp
             // 
             this.TabFriends.Location = new System.Drawing.Point(4, 24);
             this.TabFriends.Name = "TabFriends";
-            this.TabFriends.Size = new System.Drawing.Size(675, 433);
+            this.TabFriends.Size = new System.Drawing.Size(675, 445);
             this.TabFriends.TabIndex = 3;
             this.TabFriends.Text = "TabFriends";
             this.TabFriends.UseVisualStyleBackColor = true;
@@ -588,7 +610,7 @@ namespace Vkapp
             // 
             this.TabSettings.Location = new System.Drawing.Point(4, 24);
             this.TabSettings.Name = "TabSettings";
-            this.TabSettings.Size = new System.Drawing.Size(675, 433);
+            this.TabSettings.Size = new System.Drawing.Size(675, 445);
             this.TabSettings.TabIndex = 5;
             this.TabSettings.Text = "TabSettings";
             this.TabSettings.UseVisualStyleBackColor = true;
@@ -597,7 +619,7 @@ namespace Vkapp
             // 
             this.TabWall.Location = new System.Drawing.Point(4, 24);
             this.TabWall.Name = "TabWall";
-            this.TabWall.Size = new System.Drawing.Size(675, 433);
+            this.TabWall.Size = new System.Drawing.Size(675, 445);
             this.TabWall.TabIndex = 6;
             this.TabWall.Text = "TabWall";
             this.TabWall.UseVisualStyleBackColor = true;
@@ -605,6 +627,7 @@ namespace Vkapp
             // BackArrow
             // 
             this.BackArrow.AutoSize = true;
+            this.BackArrow.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BackArrow.Font = new System.Drawing.Font("Tahoma", 14F);
             this.BackArrow.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.BackArrow.Location = new System.Drawing.Point(23, 150);
@@ -624,6 +647,23 @@ namespace Vkapp
             // 
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // MessagesListView
+            // 
+            this.MessagesListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MessagesListView.CellEditUseWholeCell = false;
+            this.MessagesListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.MessagesListView.FullRowSelect = true;
+            this.MessagesListView.HideSelection = false;
+            this.MessagesListView.Location = new System.Drawing.Point(47, 16);
+            this.MessagesListView.MultiSelect = false;
+            this.MessagesListView.Name = "MessagesListView";
+            this.MessagesListView.RowHeight = 50;
+            this.MessagesListView.ShowGroups = false;
+            this.MessagesListView.Size = new System.Drawing.Size(527, 241);
+            this.MessagesListView.TabIndex = 4;
+            this.MessagesListView.UseCompatibleStateImageBehavior = false;
+            this.MessagesListView.View = System.Windows.Forms.View.Details;
             // 
             // MainForm
             // 
@@ -653,8 +693,10 @@ namespace Vkapp
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabdialogPictureBox)).EndInit();
+            this.panel5.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MessagesListView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -708,5 +750,7 @@ namespace Vkapp
         private System.Windows.Forms.Button TabUserInfoFriendActionsButton;
         private System.Windows.Forms.Label TabUserInfoFollowYouLabel;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label1;
+        private BrightIdeasSoftware.ObjectListView MessagesListView;
     }
 }

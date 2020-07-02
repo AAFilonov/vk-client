@@ -128,6 +128,13 @@ namespace Vkapp
             DialogPictureList.ColorDepth = ColorDepth.Depth32Bit;
             D.TotalDialogsCount = 0;
 
+            Page.Appearance = TabAppearance.FlatButtons;
+            Page.ItemSize = new Size(0,1);
+            Page.SizeMode = TabSizeMode.Fixed;
+            Page.TabStop = false;
+
+
+
 
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -139,7 +146,7 @@ namespace Vkapp
             {
                 D.MyUserID = (long)D.api.UserId;
 
-                timer1.Enabled = true;
+               // timer1.Enabled = true;
                 D.PreviosPagesContexts = new Stack<PageContext>();
                 D.Context = new PageContext();
 
@@ -157,7 +164,7 @@ namespace Vkapp
         private void Page_Selecting(object sender, TabControlCancelEventArgs e)
         {
             D.PreviosPagesContexts.Push(new PageContext (D.Context));
-
+            timer1.Enabled = false;
             switch (e.TabPage.Name)
             {
                 case "TabUserInfo":
@@ -305,10 +312,26 @@ namespace Vkapp
             System.Drawing.Image im = System.Drawing.Image.FromStream(stream);
             return im;
         }
+        public string DateSince(DateTime t)
+        {
+           
+            t = t.AddHours(3);
+            var now = DateTime.Now;
+            var difference = now.Subtract(t);
 
-      
-    
-
-        
+            if (difference.Days == 0)
+            {
+                return t.ToShortTimeString();
+            }
+            else if (t.Year <= now.Year)
+            {
+                return t.Day.ToString() + "." + t.ToString("MMM");
+            }
+            else
+            {
+                return t.Date.ToString();
+            }
+        }
+       
     }
 }
