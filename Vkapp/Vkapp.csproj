@@ -119,34 +119,43 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CapchaForm.cs">
+    <Compile Include="Forms\CapchaForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CapchaForm.Designer.cs">
+    <Compile Include="Forms\CapchaForm.Designer.cs">
       <DependentUpon>CapchaForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoginForm.cs">
+    <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginForm.Designer.cs">
+    <Compile Include="Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyDialog.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Source\MyDialog.cs" />
+    <Compile Include="Source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CapchaForm.resx">
+    <Compile Include="Source\tabConversation_actions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\tabDialog_actions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\tabUserInfo_actions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="Forms\CapchaForm.resx">
       <DependentUpon>CapchaForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoginForm.resx">
+    <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

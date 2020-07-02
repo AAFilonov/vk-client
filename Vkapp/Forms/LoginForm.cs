@@ -53,7 +53,7 @@ namespace Vkapp
             try
             {
                 // Авторизируемся для получения токена валидного для вызова методов Audio / Messages
-                await VK.api.AuthorizeAsync(new ApiAuthParams
+                await D.api.AuthorizeAsync(new ApiAuthParams
                 {
                     Login = EmailTextbox.Text,
                     Password = PasswordlTextbox.Text
@@ -81,7 +81,7 @@ namespace Vkapp
                 AuthErrorLabel.Text = "Ошибка превышено число попыток";
                 await Task.Delay(3000);
                 Close();
-
+                return;
                 // string captchaUrl = cEx.Img.ToString();
 
                 // CapchaForm F = new CapchaForm(cEx);
@@ -90,8 +90,8 @@ namespace Vkapp
             {
                 AuthErrorLabel.ForeColor = Color.Red;
                 AuthErrorLabel.Text = "Неизвестная ошибка";
-                await Task.Delay(3000);
-                Close();
+                await Task.Delay(5000);
+                return;
             }
                 Close();
         }
