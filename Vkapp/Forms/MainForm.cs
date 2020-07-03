@@ -23,9 +23,9 @@ namespace Vkapp
 
     public partial class MainForm : Form
     {
-        
 
-        
+      
+
         private void ObjListInit()
         {
             ObjDialogList.OwnerDraw = true;
@@ -128,12 +128,16 @@ namespace Vkapp
             DialogPictureList.ColorDepth = ColorDepth.Depth32Bit;
             D.TotalDialogsCount = 0;
 
+            FriendsPictureList.ImageSize = new Size(50, 50);
+            FriendsPictureList.ColorDepth = ColorDepth.Depth32Bit;
+
             Page.Appearance = TabAppearance.FlatButtons;
             Page.ItemSize = new Size(0,1);
             Page.SizeMode = TabSizeMode.Fixed;
             Page.TabStop = false;
 
-
+            FriendListOffset = new int();
+            FriendsCount = new int();
 
 
         }
@@ -153,18 +157,20 @@ namespace Vkapp
                 D.Context.Tab = TabUserInfo;
                 D.Context.SeenUser = D.MyUserID;
                 D.Context.ActiveChat = null;
-                D.PreviosPagesContexts.Push(new PageContext(D.Context));
+               
                 Page.SelectedTab = TabUserInfo;
                 LoadUserinfo();
                 ObjListInit();
+                InitFriendsListView();
                 DialogsAddAsync();
             }
 
         }
+      
         private void Page_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            D.PreviosPagesContexts.Push(new PageContext (D.Context));
-            timer1.Enabled = false;
+            
+           
             switch (e.TabPage.Name)
             {
                 case "TabUserInfo":
@@ -184,18 +190,18 @@ namespace Vkapp
                     D.Context.Tab = TabDialog;
                     LoadDialogTab();
 
-
-                    break;
-                case "TabGroups":
-
                     break;
                 case "TabFriends":
-
+                    D.Context.Tab = TabFriends;
+                    FriendListOffset = 0;
+                    var u = D.api.Users.Get(new long[] { (long)D.Context.SeenUser }, ProfileFields.Counters).FirstOrDefault();
+                    FriendsCount =  (int)u.Counters.Friends;
+                    FriendsListView1.ClearObjects();
+                    LoadFriendsTab();
                     break;
                 case "TabSettings":
                     break;
-                case "TabWall":
-                    break;
+
                 default:
                     break;
             }
@@ -203,38 +209,36 @@ namespace Vkapp
         }
         private void ActionList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ActionList.Focus();
+            D.PreviosPagesContexts.Push(new PageContext(D.Context));
             int active = ActionList.SelectedIndex;
-            D.PreviosPagesContexts.Clear();
-            D.Context.SeenUser = D.MyUserID;
-            D.Context.ActiveChat = null;
            
             switch (active)
             {
                 case 0:
-
+                   
 
                     Page.SelectedTab = TabUserInfo;
-                    D.Context.Tab = TabUserInfo;
+                   
+                    D.Context.SeenUser = D.MyUserID;
+                    D.Context.ActiveChat = null;
+                   
                     break;
                 case 1:
 
                     Page.SelectedTab = TabConversations;
-                    D.Context.Tab = TabConversations;
+                  
                     break;
                 case 2:
-                    Page.SelectedTab = TabGroups;
-                    D.Context.Tab = TabGroups;
+                    Page.SelectedTab = TabFriends;
+                   
+
+
                     break;
                 case 3:
-                    Page.SelectedTab = TabFriends;
-                    D.Context.Tab = TabFriends;
+                    Page.SelectedTab = TabSettings;
+                  
                     break;
                 case 4:
-                    Page.SelectedTab = TabSettings;
-                    D.Context.Tab = TabSettings;
-                    break;
-                case 5:
                     DialogResult result = MessageBox.Show(
                         "Вы действиетльно желаете выйти?",
                         "Внимание",
@@ -252,8 +256,7 @@ namespace Vkapp
                     break;
 
 
-            }
-            ActionList.ClearSelected();
+            }   
         }
        
 
@@ -272,9 +275,7 @@ namespace Vkapp
 
         private void ObjDialogList_ItemActivate(object sender, EventArgs e)
         {
-
-            D.PreviosPagesContexts.Push(D.Context);
-            D.Context.Tab = TabDialog;
+            D.PreviosPagesContexts.Push(new PageContext(D.Context));
             D.Context.ActiveChat = D.DialogsList[ObjDialogList.SelectedIndex];
             Page.SelectedTab = TabDialog;
             D.Context.SeenUser = null;
@@ -285,7 +286,7 @@ namespace Vkapp
         private void BackArrow_Click(object sender, EventArgs e)
         {
 
-            if (D.PreviosPagesContexts.Count != 0)
+            if (D.PreviosPagesContexts.Count >0)
             {
                 D.Context = D.PreviosPagesContexts.Pop();
                 Page.SelectedTab = D.Context.Tab;
@@ -333,6 +334,39 @@ namespace Vkapp
             }
         }
 
+        private void TabUserInfoGoToMessageButton_Click(object sender, EventArgs e)
+        {
+            D.PreviosPagesContexts.Push(D.Context);
+            D.Context.Tab = TabDialog;
+            //  D.Context.ActiveChat=  D.api.Messages.get;
+        }
 
+        private void TabUserInfoFriendButton_Click(object sender, EventArgs e)
+        {
+            switch ((int)D.api.Friends.AreFriends(new long[] { (long)D.Context.SeenUser }).FirstOrDefault().FriendStatus)
+            {
+                case 0:
+                    D.api.Friends.Add((long)D.Context.SeenUser, "", null);
+                    TabUserInfoFriendButton.Text = "Заявка отправлена";
+                    break;
+                case 1:
+                    D.api.Friends.Delete((long)D.Context.SeenUser);
+                    TabUserInfoFriendButton.Text = "Добавить в друзья";
+                    break;
+                case 2:
+                    D.api.Friends.Add((long)D.Context.SeenUser, "", null);
+                    TabUserInfoFollowYouLabel.Visible = false;
+                    TabUserInfoFriendButton.Text = "У Вас в друзьях";
+                    break;
+                case 3:
+                    D.api.Friends.Delete((long)D.Context.SeenUser);
+                    TabUserInfoFriendButton.Text = "Принять заявку";
+                    TabUserInfoFollowYouLabel.Visible = true;
+                    break;
+
+            }
+        }
+
+    
     }
 }

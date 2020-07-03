@@ -23,37 +23,12 @@ namespace Vkapp
     public partial class MainForm : Form
     {
 
-        public void TabUserInfoGoToMessageButton_Click(object sender, EventArgs e)
-        {
-            D.PreviosPagesContexts.Push(D.Context);
-            D.Context.Tab = TabDialog;
-          //  D.Context.ActiveChat=  D.api.Messages.get;
-        }
-
+  
         private void UserUpdateButton_Click(object sender, EventArgs e)
         {
             LoadUserinfo();
         }
-        public void TabUserInfoFriendButton_Click(object sender, EventArgs e)
-        {
-            switch ((int)D.api.Friends.AreFriends(new long[] { (long)D.Context.SeenUser}).FirstOrDefault().FriendStatus)
-            {
-                case 0:
-                    TabUserInfoFriendButton.Text = "Добавить в друзья";
-                    break;
-                case 1:
-                    TabUserInfoFriendButton.Text = "Заявка отправлена";
-                    break;
-                case 2:
-                    TabUserInfoFriendButton.Text = "Подписан на вас";
-                    TabUserInfoFollowYouLabel.Visible = true;
-                    break;
-                case 3:
-                    TabUserInfoFriendButton.Text = "У Вас в друзьях";
-                    break;
-
-            }
-        }
+       
         public void LoadUserinfo()
         {
 
@@ -90,7 +65,7 @@ namespace Vkapp
                         TabUserInfoFriendButton.Text = "Заявка отправлена";
                         break;
                     case 2:
-                        TabUserInfoFriendButton.Text = "Подписан на вас";
+                        TabUserInfoFriendButton.Text = "Принять заявку";
                         TabUserInfoFollowYouLabel.Visible = true;
                         break;
                     case 3:

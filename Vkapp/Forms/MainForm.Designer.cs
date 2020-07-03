@@ -74,13 +74,16 @@ namespace Vkapp
             this.ReloadButton = new System.Windows.Forms.Button();
             this.RichTextBoxDialog = new System.Windows.Forms.RichTextBox();
             this.ButtonSendDialog = new System.Windows.Forms.Button();
-            this.TabGroups = new System.Windows.Forms.TabPage();
             this.TabFriends = new System.Windows.Forms.TabPage();
+            this.FriendsListView1 = new BrightIdeasSoftware.ObjectListView();
+            this.ImageColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.FirstNameColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.LastNameColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.TabSettings = new System.Windows.Forms.TabPage();
-            this.TabWall = new System.Windows.Forms.TabPage();
-            this.BackArrow = new System.Windows.Forms.Label();
             this.DialogPictureList = new System.Windows.Forms.ImageList(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.FriendsPictureList = new System.Windows.Forms.ImageList(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.Page.SuspendLayout();
             this.TabUserInfo.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -94,6 +97,8 @@ namespace Vkapp
             ((System.ComponentModel.ISupportInitialize)(this.TabdialogPictureBox)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.TabFriends.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FriendsListView1)).BeginInit();
             this.SuspendLayout();
             // 
             // ActionList
@@ -112,7 +117,7 @@ namespace Vkapp
             "Выход"});
             this.ActionList.Location = new System.Drawing.Point(9, 13);
             this.ActionList.Name = "ActionList";
-            this.ActionList.Size = new System.Drawing.Size(123, 114);
+            this.ActionList.Size = new System.Drawing.Size(132, 114);
             this.ActionList.TabIndex = 0;
             this.ActionList.SelectedIndexChanged += new System.EventHandler(this.ActionList_SelectedIndexChanged);
             // 
@@ -130,15 +135,13 @@ namespace Vkapp
             this.Page.Controls.Add(this.TabUserInfo);
             this.Page.Controls.Add(this.TabConversations);
             this.Page.Controls.Add(this.TabDialog);
-            this.Page.Controls.Add(this.TabGroups);
             this.Page.Controls.Add(this.TabFriends);
             this.Page.Controls.Add(this.TabSettings);
-            this.Page.Controls.Add(this.TabWall);
             this.Page.ItemSize = new System.Drawing.Size(50, 20);
-            this.Page.Location = new System.Drawing.Point(128, 0);
+            this.Page.Location = new System.Drawing.Point(127, 0);
             this.Page.Name = "Page";
             this.Page.SelectedIndex = 0;
-            this.Page.Size = new System.Drawing.Size(683, 473);
+            this.Page.Size = new System.Drawing.Size(684, 473);
             this.Page.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.Page.TabIndex = 2;
             this.Page.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.Page_Selecting);
@@ -154,7 +157,7 @@ namespace Vkapp
             this.TabUserInfo.Location = new System.Drawing.Point(4, 24);
             this.TabUserInfo.Name = "TabUserInfo";
             this.TabUserInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.TabUserInfo.Size = new System.Drawing.Size(675, 445);
+            this.TabUserInfo.Size = new System.Drawing.Size(676, 445);
             this.TabUserInfo.TabIndex = 0;
             this.TabUserInfo.Text = "TabUserInfo";
             this.TabUserInfo.UseVisualStyleBackColor = true;
@@ -197,6 +200,7 @@ namespace Vkapp
             this.TabUserInfoFriendButton.TabIndex = 13;
             this.TabUserInfoFriendButton.Text = "Добавить в друзья";
             this.TabUserInfoFriendButton.UseVisualStyleBackColor = false;
+            this.TabUserInfoFriendButton.Click += new System.EventHandler(this.TabUserInfoFriendButton_Click);
             // 
             // TabUserInfoGoToMessageButton
             // 
@@ -311,6 +315,7 @@ namespace Vkapp
             this.UserFriendsButton.TabIndex = 5;
             this.UserFriendsButton.Text = "друзей";
             this.UserFriendsButton.UseVisualStyleBackColor = true;
+            this.UserFriendsButton.Click += new System.EventHandler(this.UserFriendsButton_Click);
             // 
             // UserUpdateButton
             // 
@@ -380,7 +385,7 @@ namespace Vkapp
             this.TabConversations.Location = new System.Drawing.Point(4, 24);
             this.TabConversations.Name = "TabConversations";
             this.TabConversations.Padding = new System.Windows.Forms.Padding(3);
-            this.TabConversations.Size = new System.Drawing.Size(675, 445);
+            this.TabConversations.Size = new System.Drawing.Size(676, 445);
             this.TabConversations.TabIndex = 1;
             this.TabConversations.Text = "Conversations";
             this.TabConversations.UseVisualStyleBackColor = true;
@@ -450,7 +455,7 @@ namespace Vkapp
             this.TabDialog.Controls.Add(this.panel3);
             this.TabDialog.Location = new System.Drawing.Point(4, 24);
             this.TabDialog.Name = "TabDialog";
-            this.TabDialog.Size = new System.Drawing.Size(675, 445);
+            this.TabDialog.Size = new System.Drawing.Size(676, 445);
             this.TabDialog.TabIndex = 2;
             this.TabDialog.Text = "TabDialog";
             this.TabDialog.UseVisualStyleBackColor = true;
@@ -614,54 +619,67 @@ namespace Vkapp
             this.ButtonSendDialog.UseVisualStyleBackColor = false;
             this.ButtonSendDialog.Click += new System.EventHandler(this.ButtonSendDialog_Click);
             // 
-            // TabGroups
-            // 
-            this.TabGroups.Location = new System.Drawing.Point(4, 24);
-            this.TabGroups.Name = "TabGroups";
-            this.TabGroups.Size = new System.Drawing.Size(675, 445);
-            this.TabGroups.TabIndex = 4;
-            this.TabGroups.Text = "TabGroups";
-            this.TabGroups.UseVisualStyleBackColor = true;
-            // 
             // TabFriends
             // 
+            this.TabFriends.Controls.Add(this.FriendsListView1);
             this.TabFriends.Location = new System.Drawing.Point(4, 24);
             this.TabFriends.Name = "TabFriends";
-            this.TabFriends.Size = new System.Drawing.Size(675, 445);
+            this.TabFriends.Size = new System.Drawing.Size(676, 445);
             this.TabFriends.TabIndex = 3;
             this.TabFriends.Text = "TabFriends";
             this.TabFriends.UseVisualStyleBackColor = true;
+            // 
+            // FriendsListView1
+            // 
+            this.FriendsListView1.AllColumns.Add(this.ImageColumn);
+            this.FriendsListView1.AllColumns.Add(this.FirstNameColumn);
+            this.FriendsListView1.AllColumns.Add(this.LastNameColumn);
+            this.FriendsListView1.CellEditUseWholeCell = false;
+            this.FriendsListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ImageColumn,
+            this.FirstNameColumn,
+            this.LastNameColumn});
+            this.FriendsListView1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.FriendsListView1.FullRowSelect = true;
+            this.FriendsListView1.HideSelection = false;
+            this.FriendsListView1.Location = new System.Drawing.Point(7, 6);
+            this.FriendsListView1.MultiSelect = false;
+            this.FriendsListView1.Name = "FriendsListView1";
+            this.FriendsListView1.RowHeight = 60;
+            this.FriendsListView1.Size = new System.Drawing.Size(664, 431);
+            this.FriendsListView1.TabIndex = 2;
+            this.FriendsListView1.UseCompatibleStateImageBehavior = false;
+            this.FriendsListView1.View = System.Windows.Forms.View.Details;
+            this.FriendsListView1.Scroll += new System.EventHandler<System.Windows.Forms.ScrollEventArgs>(this.FriendsListView1_Scroll);
+            this.FriendsListView1.ItemActivate += new System.EventHandler(this.FriendsListView1_ItemActivate);
+            // 
+            // ImageColumn
+            // 
+            this.ImageColumn.AspectName = "Image";
+            this.ImageColumn.Text = "";
+            this.ImageColumn.Width = 71;
+            // 
+            // FirstNameColumn
+            // 
+            this.FirstNameColumn.AspectName = "FirstName";
+            this.FirstNameColumn.Text = "Имя";
+            this.FirstNameColumn.Width = 249;
+            this.FirstNameColumn.WordWrap = true;
+            // 
+            // LastNameColumn
+            // 
+            this.LastNameColumn.AspectName = "LastName";
+            this.LastNameColumn.Text = "Фамилия";
+            this.LastNameColumn.Width = 183;
             // 
             // TabSettings
             // 
             this.TabSettings.Location = new System.Drawing.Point(4, 24);
             this.TabSettings.Name = "TabSettings";
-            this.TabSettings.Size = new System.Drawing.Size(675, 445);
+            this.TabSettings.Size = new System.Drawing.Size(676, 445);
             this.TabSettings.TabIndex = 5;
             this.TabSettings.Text = "TabSettings";
             this.TabSettings.UseVisualStyleBackColor = true;
-            // 
-            // TabWall
-            // 
-            this.TabWall.Location = new System.Drawing.Point(4, 24);
-            this.TabWall.Name = "TabWall";
-            this.TabWall.Size = new System.Drawing.Size(675, 445);
-            this.TabWall.TabIndex = 6;
-            this.TabWall.Text = "TabWall";
-            this.TabWall.UseVisualStyleBackColor = true;
-            // 
-            // BackArrow
-            // 
-            this.BackArrow.AutoSize = true;
-            this.BackArrow.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BackArrow.Font = new System.Drawing.Font("Tahoma", 14F);
-            this.BackArrow.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BackArrow.Location = new System.Drawing.Point(23, 150);
-            this.BackArrow.Name = "BackArrow";
-            this.BackArrow.Size = new System.Drawing.Size(52, 23);
-            this.BackArrow.TabIndex = 12;
-            this.BackArrow.Text = "<----";
-            this.BackArrow.Click += new System.EventHandler(this.BackArrow_Click);
             // 
             // DialogPictureList
             // 
@@ -674,12 +692,32 @@ namespace Vkapp
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // FriendsPictureList
+            // 
+            this.FriendsPictureList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.FriendsPictureList.ImageSize = new System.Drawing.Size(16, 16);
+            this.FriendsPictureList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.Window;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.button1.ForeColor = System.Drawing.Color.SteelBlue;
+            this.button1.Location = new System.Drawing.Point(21, 133);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(81, 34);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "<-----";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.BackArrow_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 473);
-            this.Controls.Add(this.BackArrow);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.Page);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.ActionList);
@@ -704,8 +742,9 @@ namespace Vkapp
             ((System.ComponentModel.ISupportInitialize)(this.TabdialogPictureBox)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.TabFriends.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.FriendsListView1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -719,7 +758,6 @@ namespace Vkapp
         private System.Windows.Forms.PictureBox MyAvatarPicture;
         private System.Windows.Forms.TabPage TabConversations;
         private System.Windows.Forms.TabPage TabDialog;
-        private System.Windows.Forms.TabPage TabGroups;
         private System.Windows.Forms.TabPage TabFriends;
         private System.Windows.Forms.TabPage TabSettings;
         private System.Windows.Forms.Panel panel1;
@@ -734,7 +772,6 @@ namespace Vkapp
         private System.Windows.Forms.Button UserPhotoButton;
         private System.Windows.Forms.Button UserFollowersButton;
         private System.Windows.Forms.Button UserFriendsButton;
-        private System.Windows.Forms.TabPage TabWall;
         private System.Windows.Forms.ImageList DialogPictureList;
         private System.Windows.Forms.Button AddConversationButton;
         private System.Windows.Forms.Button UpdateConversationButton;
@@ -749,7 +786,6 @@ namespace Vkapp
         private System.Windows.Forms.Label ActionButtonTabDialog;
         private System.Windows.Forms.PictureBox TabdialogPictureBox;
         private BrightIdeasSoftware.ObjectListView ObjDialogList;
-        private System.Windows.Forms.Label BackArrow;
         private System.Windows.Forms.Button TabUserInfoFriendButton;
         private System.Windows.Forms.Button TabUserInfoGoToMessageButton;
         private System.Windows.Forms.Button TabUserInfoFriendActionsButton;
@@ -762,5 +798,11 @@ namespace Vkapp
         private System.Windows.Forms.Button LoadMoreButton;
         private System.Windows.Forms.Button ReloadButton;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ImageList FriendsPictureList;
+        private BrightIdeasSoftware.ObjectListView FriendsListView1;
+        private BrightIdeasSoftware.OLVColumn ImageColumn;
+        private BrightIdeasSoftware.OLVColumn FirstNameColumn;
+        private BrightIdeasSoftware.OLVColumn LastNameColumn;
+        private System.Windows.Forms.Button button1;
     }
 }

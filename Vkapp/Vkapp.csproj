@@ -146,6 +146,9 @@
     <Compile Include="Source\tabDialog_actions.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Source\tabFriendsActions.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Source\tabUserInfo_actions.cs">
       <SubType>Form</SubType>
     </Compile>
