@@ -23,24 +23,7 @@ namespace Vkapp
     public partial class MainForm : Form
     {
 
-        private void AddConversationButton_Click(object sender, EventArgs e)
-        {
-
-            DialogsAddAsync();
-        }
-
-        private void UpdateConversationButton_Click(object sender, EventArgs e)
-        {
-
-            DialogsUpdAsync();
-        }
-
-        public void loadConversationTab() 
-        {
-            if (D.DialogsList.Count >= 20)
-                DialogsUpdAsync();
-            else return;
-        }
+       
         public async void DialogsAddAsync()
         {
             const ulong AddCount = 20;
@@ -51,18 +34,21 @@ namespace Vkapp
                 Fields = new List<string> { "All" }
             });
             GetConversationsResult results = new GetConversationsResult();
+            List<MyDialog> TMP = new List<MyDialog>();
             await outerTask.ContinueWith(task =>
             {
                 results = task.Result;
+              
                 foreach (var i in results.Items)
                 {
-                    D.DialogsList.Add(new MyDialog(i.Conversation, i.LastMessage));
+                    TMP.Add(new MyDialog(i.Conversation, i.LastMessage));
 
                     D.TotalDialogsCount++;
                     //DialogPictureList.Images.Add(DialogsList.Last().Id, LoadImageFromUrl(DialogsList.Last().PicUrl));
                 }
             });
-            ObjDialogList.AddObjects(D.DialogsList);
+            D.DialogsList.AddRange(TMP);
+            ObjDialogList.AddObjects(TMP);
            
 
         }
@@ -89,8 +75,25 @@ namespace Vkapp
             ObjDialogList.UpdateObjects(D.DialogsList);
         }
 
-     
+        private void AddConversationButton_Click(object sender, EventArgs e)
+        {
 
-     
+            DialogsAddAsync();
+        }
+
+        private void UpdateConversationButton_Click(object sender, EventArgs e)
+        {
+
+            DialogsUpdAsync();
+        }
+
+        public void loadConversationTab()
+        {
+            if (D.DialogsList.Count >= 20)
+                DialogsUpdAsync();
+            else return;
+        }
+
+
     }
 }

@@ -49,9 +49,9 @@ namespace Vkapp
 
             if (D.Context.SeenUser == D.MyUserID)
             {
-                TabUserInfoGoToMessageButton.Visible = false;
+               
                 TabUserInfoFriendButton.Visible = false;
-                TabUserInfoFriendActionsButton.Visible = false;
+              
             }
             else
             {

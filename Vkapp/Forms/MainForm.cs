@@ -176,9 +176,9 @@ namespace Vkapp
                 case "TabUserInfo":
                     D.Context.Tab = TabUserInfo;
 
-                    TabUserInfoGoToMessageButton.Visible = true;
+                 
                     TabUserInfoFriendButton.Visible = true;
-                    TabUserInfoFriendActionsButton.Visible = true;
+                 
                     LoadUserinfo();
                     break;
                 case "TabConversations":
@@ -199,13 +199,16 @@ namespace Vkapp
                     FriendsListView1.ClearObjects();
                     LoadFriendsTab();
                     break;
-                case "TabSettings":
-                    break;
 
                 default:
                     break;
             }
-          
+            if (D.Context.Tab != TabDialog)
+            {
+                timer1.Enabled = false;
+                checkBox1.Checked = false;
+            }
+
         }
         private void ActionList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -230,15 +233,8 @@ namespace Vkapp
                     break;
                 case 2:
                     Page.SelectedTab = TabFriends;
-                   
-
-
                     break;
-                case 3:
-                    Page.SelectedTab = TabSettings;
-                  
-                    break;
-                case 4:
+                case 3:        
                     DialogResult result = MessageBox.Show(
                         "Вы действиетльно желаете выйти?",
                         "Внимание",
@@ -250,8 +246,7 @@ namespace Vkapp
                     if (result == DialogResult.OK)
                     {
 
-                        LogOutAsync();
-                        System.Windows.Forms.Application.Exit();
+                        Close();
                     }
                     break;
 
@@ -263,13 +258,7 @@ namespace Vkapp
         //Загрузка и обновление диалогов
        
 
-        private async void LogOutAsync()
-        {
-            await D.api.LogOutAsync();
-        }
-        
        
-
       
     
 
@@ -336,9 +325,13 @@ namespace Vkapp
 
         private void TabUserInfoGoToMessageButton_Click(object sender, EventArgs e)
         {
-            D.PreviosPagesContexts.Push(D.Context);
-            D.Context.Tab = TabDialog;
-            //  D.Context.ActiveChat=  D.api.Messages.get;
+           //D.PreviosPagesContexts.Push(D.Context);
+           //var C = D.api.Messages.get
+           //D.Context.ActiveChat = new MyDialog();
+           //
+           //
+           //D.Context.Tab = TabDialog;
+           ////  D.Context.ActiveChat=  D.api.Messages.get;
         }
 
         private void TabUserInfoFriendButton_Click(object sender, EventArgs e)

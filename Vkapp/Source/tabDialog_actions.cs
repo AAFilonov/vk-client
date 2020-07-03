@@ -82,6 +82,7 @@ namespace Vkapp
         }
         private void LoadMessages()
         {
+            if (D.Context.ActiveChat == null) return;
             List<VkNet.Model.Message> results = new List<VkNet.Model.Message>();
             int last = -1;
             do
@@ -248,7 +249,7 @@ namespace Vkapp
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            timer1.Enabled = !checkBox1.Checked;
+            timer1.Enabled = checkBox1.Checked;
         }
 
 

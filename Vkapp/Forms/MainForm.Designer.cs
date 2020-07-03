@@ -34,10 +34,6 @@ namespace Vkapp
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.Page = new System.Windows.Forms.TabControl();
             this.TabUserInfo = new System.Windows.Forms.TabPage();
-            this.TabUserInfoFollowYouLabel = new System.Windows.Forms.Label();
-            this.TabUserInfoFriendActionsButton = new System.Windows.Forms.Button();
-            this.TabUserInfoFriendButton = new System.Windows.Forms.Button();
-            this.TabUserInfoGoToMessageButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.UserCountryLabel = new System.Windows.Forms.Label();
             this.UserGroupButton = new System.Windows.Forms.Button();
@@ -62,7 +58,6 @@ namespace Vkapp
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.TabDialogOnlineLabel = new System.Windows.Forms.Label();
             this.TabDialogNameLabel = new System.Windows.Forms.Label();
-            this.ActionButtonTabDialog = new System.Windows.Forms.Label();
             this.TabdialogPictureBox = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.ListViewMsg = new System.Windows.Forms.ListView();
@@ -84,6 +79,8 @@ namespace Vkapp
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.FriendsPictureList = new System.Windows.Forms.ImageList(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.TabUserInfoFollowYouLabel = new System.Windows.Forms.Label();
+            this.TabUserInfoFriendButton = new System.Windows.Forms.Button();
             this.Page.SuspendLayout();
             this.TabUserInfo.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -113,11 +110,10 @@ namespace Vkapp
             "Моя страница",
             "Мои сообщения",
             "Мои друзья",
-            "Настройки",
             "Выход"});
             this.ActionList.Location = new System.Drawing.Point(9, 13);
             this.ActionList.Name = "ActionList";
-            this.ActionList.Size = new System.Drawing.Size(132, 114);
+            this.ActionList.Size = new System.Drawing.Size(132, 95);
             this.ActionList.TabIndex = 0;
             this.ActionList.SelectedIndexChanged += new System.EventHandler(this.ActionList_SelectedIndexChanged);
             // 
@@ -149,9 +145,7 @@ namespace Vkapp
             // TabUserInfo
             // 
             this.TabUserInfo.Controls.Add(this.TabUserInfoFollowYouLabel);
-            this.TabUserInfo.Controls.Add(this.TabUserInfoFriendActionsButton);
             this.TabUserInfo.Controls.Add(this.TabUserInfoFriendButton);
-            this.TabUserInfo.Controls.Add(this.TabUserInfoGoToMessageButton);
             this.TabUserInfo.Controls.Add(this.panel2);
             this.TabUserInfo.Controls.Add(this.panel1);
             this.TabUserInfo.Location = new System.Drawing.Point(4, 24);
@@ -161,60 +155,6 @@ namespace Vkapp
             this.TabUserInfo.TabIndex = 0;
             this.TabUserInfo.Text = "TabUserInfo";
             this.TabUserInfo.UseVisualStyleBackColor = true;
-            // 
-            // TabUserInfoFollowYouLabel
-            // 
-            this.TabUserInfoFollowYouLabel.AccessibleDescription = "";
-            this.TabUserInfoFollowYouLabel.AutoSize = true;
-            this.TabUserInfoFollowYouLabel.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.TabUserInfoFollowYouLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.TabUserInfoFollowYouLabel.Location = new System.Drawing.Point(61, 380);
-            this.TabUserInfoFollowYouLabel.Name = "TabUserInfoFollowYouLabel";
-            this.TabUserInfoFollowYouLabel.Size = new System.Drawing.Size(130, 19);
-            this.TabUserInfoFollowYouLabel.TabIndex = 16;
-            this.TabUserInfoFollowYouLabel.Text = "Подписан на вас";
-            this.TabUserInfoFollowYouLabel.Visible = false;
-            // 
-            // TabUserInfoFriendActionsButton
-            // 
-            this.TabUserInfoFriendActionsButton.BackColor = System.Drawing.Color.SteelBlue;
-            this.TabUserInfoFriendActionsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TabUserInfoFriendActionsButton.Font = new System.Drawing.Font("Tahoma", 15F);
-            this.TabUserInfoFriendActionsButton.ForeColor = System.Drawing.SystemColors.Window;
-            this.TabUserInfoFriendActionsButton.Location = new System.Drawing.Point(192, 327);
-            this.TabUserInfoFriendActionsButton.Name = "TabUserInfoFriendActionsButton";
-            this.TabUserInfoFriendActionsButton.Size = new System.Drawing.Size(47, 40);
-            this.TabUserInfoFriendActionsButton.TabIndex = 15;
-            this.TabUserInfoFriendActionsButton.Text = "...";
-            this.TabUserInfoFriendActionsButton.UseVisualStyleBackColor = false;
-            // 
-            // TabUserInfoFriendButton
-            // 
-            this.TabUserInfoFriendButton.BackColor = System.Drawing.Color.SteelBlue;
-            this.TabUserInfoFriendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TabUserInfoFriendButton.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.TabUserInfoFriendButton.ForeColor = System.Drawing.SystemColors.Window;
-            this.TabUserInfoFriendButton.Location = new System.Drawing.Point(6, 327);
-            this.TabUserInfoFriendButton.Name = "TabUserInfoFriendButton";
-            this.TabUserInfoFriendButton.Size = new System.Drawing.Size(180, 40);
-            this.TabUserInfoFriendButton.TabIndex = 13;
-            this.TabUserInfoFriendButton.Text = "Добавить в друзья";
-            this.TabUserInfoFriendButton.UseVisualStyleBackColor = false;
-            this.TabUserInfoFriendButton.Click += new System.EventHandler(this.TabUserInfoFriendButton_Click);
-            // 
-            // TabUserInfoGoToMessageButton
-            // 
-            this.TabUserInfoGoToMessageButton.BackColor = System.Drawing.Color.SteelBlue;
-            this.TabUserInfoGoToMessageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TabUserInfoGoToMessageButton.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.TabUserInfoGoToMessageButton.ForeColor = System.Drawing.SystemColors.Window;
-            this.TabUserInfoGoToMessageButton.Location = new System.Drawing.Point(6, 281);
-            this.TabUserInfoGoToMessageButton.Name = "TabUserInfoGoToMessageButton";
-            this.TabUserInfoGoToMessageButton.Size = new System.Drawing.Size(233, 40);
-            this.TabUserInfoGoToMessageButton.TabIndex = 12;
-            this.TabUserInfoGoToMessageButton.Text = "Написать Сообщение";
-            this.TabUserInfoGoToMessageButton.UseVisualStyleBackColor = false;
-            this.TabUserInfoGoToMessageButton.Click += new System.EventHandler(this.TabUserInfoGoToMessageButton_Click);
             // 
             // panel2
             // 
@@ -466,7 +406,6 @@ namespace Vkapp
             this.panel6.Controls.Add(this.checkBox1);
             this.panel6.Controls.Add(this.TabDialogOnlineLabel);
             this.panel6.Controls.Add(this.TabDialogNameLabel);
-            this.panel6.Controls.Add(this.ActionButtonTabDialog);
             this.panel6.Controls.Add(this.TabdialogPictureBox);
             this.panel6.Location = new System.Drawing.Point(13, 3);
             this.panel6.Name = "panel6";
@@ -506,16 +445,6 @@ namespace Vkapp
             this.TabDialogNameLabel.Text = "Имя Фамилия";
             this.TabDialogNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.TabDialogNameLabel.Click += new System.EventHandler(this.TabDialogNameLabel_Click);
-            // 
-            // ActionButtonTabDialog
-            // 
-            this.ActionButtonTabDialog.AutoSize = true;
-            this.ActionButtonTabDialog.Font = new System.Drawing.Font("Tahoma", 16F);
-            this.ActionButtonTabDialog.Location = new System.Drawing.Point(541, 13);
-            this.ActionButtonTabDialog.Name = "ActionButtonTabDialog";
-            this.ActionButtonTabDialog.Size = new System.Drawing.Size(33, 27);
-            this.ActionButtonTabDialog.TabIndex = 2;
-            this.ActionButtonTabDialog.Text = "...";
             // 
             // TabdialogPictureBox
             // 
@@ -712,6 +641,33 @@ namespace Vkapp
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.BackArrow_Click);
             // 
+            // TabUserInfoFollowYouLabel
+            // 
+            this.TabUserInfoFollowYouLabel.AccessibleDescription = "";
+            this.TabUserInfoFollowYouLabel.AutoSize = true;
+            this.TabUserInfoFollowYouLabel.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.TabUserInfoFollowYouLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.TabUserInfoFollowYouLabel.Location = new System.Drawing.Point(61, 332);
+            this.TabUserInfoFollowYouLabel.Name = "TabUserInfoFollowYouLabel";
+            this.TabUserInfoFollowYouLabel.Size = new System.Drawing.Size(130, 19);
+            this.TabUserInfoFollowYouLabel.TabIndex = 16;
+            this.TabUserInfoFollowYouLabel.Text = "Подписан на вас";
+            this.TabUserInfoFollowYouLabel.Visible = false;
+            // 
+            // TabUserInfoFriendButton
+            // 
+            this.TabUserInfoFriendButton.BackColor = System.Drawing.Color.SteelBlue;
+            this.TabUserInfoFriendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TabUserInfoFriendButton.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.TabUserInfoFriendButton.ForeColor = System.Drawing.SystemColors.Window;
+            this.TabUserInfoFriendButton.Location = new System.Drawing.Point(6, 279);
+            this.TabUserInfoFriendButton.Name = "TabUserInfoFriendButton";
+            this.TabUserInfoFriendButton.Size = new System.Drawing.Size(233, 40);
+            this.TabUserInfoFriendButton.TabIndex = 13;
+            this.TabUserInfoFriendButton.Text = "Добавить в друзья";
+            this.TabUserInfoFriendButton.UseVisualStyleBackColor = false;
+            this.TabUserInfoFriendButton.Click += new System.EventHandler(this.TabUserInfoFriendButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -783,13 +739,8 @@ namespace Vkapp
         private System.Windows.Forms.Button ButtonSendDialog;
         private System.Windows.Forms.Label TabDialogOnlineLabel;
         private System.Windows.Forms.Label TabDialogNameLabel;
-        private System.Windows.Forms.Label ActionButtonTabDialog;
         private System.Windows.Forms.PictureBox TabdialogPictureBox;
         private BrightIdeasSoftware.ObjectListView ObjDialogList;
-        private System.Windows.Forms.Button TabUserInfoFriendButton;
-        private System.Windows.Forms.Button TabUserInfoGoToMessageButton;
-        private System.Windows.Forms.Button TabUserInfoFriendActionsButton;
-        private System.Windows.Forms.Label TabUserInfoFollowYouLabel;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ListView ListViewMsg;
         private System.Windows.Forms.ColumnHeader NameColumn;
@@ -804,5 +755,7 @@ namespace Vkapp
         private BrightIdeasSoftware.OLVColumn FirstNameColumn;
         private BrightIdeasSoftware.OLVColumn LastNameColumn;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label TabUserInfoFollowYouLabel;
+        private System.Windows.Forms.Button TabUserInfoFriendButton;
     }
 }
