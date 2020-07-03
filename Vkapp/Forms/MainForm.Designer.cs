@@ -59,16 +59,20 @@ namespace Vkapp
             this.UpdateConversationButton = new System.Windows.Forms.Button();
             this.TabDialog = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.TabDialogOnlineLabel = new System.Windows.Forms.Label();
             this.TabDialogNameLabel = new System.Windows.Forms.Label();
             this.ActionButtonTabDialog = new System.Windows.Forms.Label();
             this.TabdialogPictureBox = new System.Windows.Forms.PictureBox();
-            this.BackArrowButtonTabDialog = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.ListViewMsg = new System.Windows.Forms.ListView();
+            this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TextColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DateColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel3 = new System.Windows.Forms.Panel();
+            this.LoadMoreButton = new System.Windows.Forms.Button();
+            this.ReloadButton = new System.Windows.Forms.Button();
             this.RichTextBoxDialog = new System.Windows.Forms.RichTextBox();
-            this.ButtonAttacments = new System.Windows.Forms.Label();
             this.ButtonSendDialog = new System.Windows.Forms.Button();
             this.TabGroups = new System.Windows.Forms.TabPage();
             this.TabFriends = new System.Windows.Forms.TabPage();
@@ -77,7 +81,6 @@ namespace Vkapp
             this.BackArrow = new System.Windows.Forms.Label();
             this.DialogPictureList = new System.Windows.Forms.ImageList(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.MessagesListView = new BrightIdeasSoftware.ObjectListView();
             this.Page.SuspendLayout();
             this.TabUserInfo.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -91,7 +94,6 @@ namespace Vkapp
             ((System.ComponentModel.ISupportInitialize)(this.TabdialogPictureBox)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MessagesListView)).BeginInit();
             this.SuspendLayout();
             // 
             // ActionList
@@ -385,17 +387,17 @@ namespace Vkapp
             // 
             // ObjDialogList
             // 
-            this.ObjDialogList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ObjDialogList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ObjDialogList.CellEditUseWholeCell = false;
             this.ObjDialogList.Cursor = System.Windows.Forms.Cursors.Default;
             this.ObjDialogList.FullRowSelect = true;
             this.ObjDialogList.HideSelection = false;
-            this.ObjDialogList.Location = new System.Drawing.Point(6, 6);
+            this.ObjDialogList.Location = new System.Drawing.Point(6, 17);
             this.ObjDialogList.MultiSelect = false;
             this.ObjDialogList.Name = "ObjDialogList";
             this.ObjDialogList.RowHeight = 50;
             this.ObjDialogList.ShowGroups = false;
-            this.ObjDialogList.Size = new System.Drawing.Size(663, 391);
+            this.ObjDialogList.Size = new System.Drawing.Size(663, 378);
             this.ObjDialogList.TabIndex = 3;
             this.ObjDialogList.UseCompatibleStateImageBehavior = false;
             this.ObjDialogList.View = System.Windows.Forms.View.Details;
@@ -435,7 +437,7 @@ namespace Vkapp
             this.UpdateConversationButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.UpdateConversationButton.Location = new System.Drawing.Point(537, 2);
             this.UpdateConversationButton.Name = "UpdateConversationButton";
-            this.UpdateConversationButton.Size = new System.Drawing.Size(123, 33);
+            this.UpdateConversationButton.Size = new System.Drawing.Size(109, 33);
             this.UpdateConversationButton.TabIndex = 2;
             this.UpdateConversationButton.Text = "Обновить";
             this.UpdateConversationButton.UseVisualStyleBackColor = false;
@@ -456,34 +458,32 @@ namespace Vkapp
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.Window;
-            this.panel6.Controls.Add(this.label1);
+            this.panel6.Controls.Add(this.checkBox1);
             this.panel6.Controls.Add(this.TabDialogOnlineLabel);
             this.panel6.Controls.Add(this.TabDialogNameLabel);
             this.panel6.Controls.Add(this.ActionButtonTabDialog);
             this.panel6.Controls.Add(this.TabdialogPictureBox);
-            this.panel6.Controls.Add(this.BackArrowButtonTabDialog);
-            this.panel6.Location = new System.Drawing.Point(13, 4);
+            this.panel6.Location = new System.Drawing.Point(13, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(655, 59);
+            this.panel6.Size = new System.Drawing.Size(658, 60);
             this.panel6.TabIndex = 5;
             // 
-            // label1
+            // checkBox1
             // 
-            this.label1.AutoSize = true;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(105, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 20);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Обновить";
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 35);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(122, 18);
+            this.checkBox1.TabIndex = 5;
+            this.checkBox1.Text = "Автообновление";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // TabDialogOnlineLabel
             // 
             this.TabDialogOnlineLabel.AutoSize = true;
             this.TabDialogOnlineLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.TabDialogOnlineLabel.Location = new System.Drawing.Point(310, 32);
+            this.TabDialogOnlineLabel.Location = new System.Drawing.Point(301, 26);
             this.TabDialogOnlineLabel.Name = "TabDialogOnlineLabel";
             this.TabDialogOnlineLabel.Size = new System.Drawing.Size(38, 14);
             this.TabDialogOnlineLabel.TabIndex = 4;
@@ -494,7 +494,7 @@ namespace Vkapp
             // 
             this.TabDialogNameLabel.AutoSize = true;
             this.TabDialogNameLabel.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.TabDialogNameLabel.Location = new System.Drawing.Point(283, 13);
+            this.TabDialogNameLabel.Location = new System.Drawing.Point(267, 3);
             this.TabDialogNameLabel.Name = "TabDialogNameLabel";
             this.TabDialogNameLabel.Size = new System.Drawing.Size(108, 19);
             this.TabDialogNameLabel.TabIndex = 3;
@@ -521,59 +521,85 @@ namespace Vkapp
             this.TabdialogPictureBox.TabStop = false;
             this.TabdialogPictureBox.Click += new System.EventHandler(this.TabDialogNameLabel_Click);
             // 
-            // BackArrowButtonTabDialog
-            // 
-            this.BackArrowButtonTabDialog.AutoSize = true;
-            this.BackArrowButtonTabDialog.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BackArrowButtonTabDialog.Font = new System.Drawing.Font("Tahoma", 14F);
-            this.BackArrowButtonTabDialog.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BackArrowButtonTabDialog.Location = new System.Drawing.Point(16, 15);
-            this.BackArrowButtonTabDialog.Name = "BackArrowButtonTabDialog";
-            this.BackArrowButtonTabDialog.Size = new System.Drawing.Size(52, 23);
-            this.BackArrowButtonTabDialog.TabIndex = 0;
-            this.BackArrowButtonTabDialog.Text = "<----";
-            // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.Window;
-            this.panel5.Controls.Add(this.MessagesListView);
+            this.panel5.Controls.Add(this.ListViewMsg);
             this.panel5.Location = new System.Drawing.Point(13, 69);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(658, 273);
             this.panel5.TabIndex = 4;
             // 
+            // ListViewMsg
+            // 
+            this.ListViewMsg.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.NameColumn,
+            this.TextColumn,
+            this.DateColumn});
+            this.ListViewMsg.FullRowSelect = true;
+            this.ListViewMsg.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.ListViewMsg.HideSelection = false;
+            this.ListViewMsg.Location = new System.Drawing.Point(3, 4);
+            this.ListViewMsg.Name = "ListViewMsg";
+            this.ListViewMsg.Size = new System.Drawing.Size(652, 255);
+            this.ListViewMsg.TabIndex = 0;
+            this.ListViewMsg.UseCompatibleStateImageBehavior = false;
+            this.ListViewMsg.View = System.Windows.Forms.View.Details;
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.Text = "Name";
+            this.NameColumn.Width = 97;
+            // 
+            // TextColumn
+            // 
+            this.TextColumn.Width = 445;
+            // 
+            // DateColumn
+            // 
+            this.DateColumn.Width = 76;
+            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.Window;
+            this.panel3.Controls.Add(this.LoadMoreButton);
+            this.panel3.Controls.Add(this.ReloadButton);
             this.panel3.Controls.Add(this.RichTextBoxDialog);
-            this.panel3.Controls.Add(this.ButtonAttacments);
             this.panel3.Controls.Add(this.ButtonSendDialog);
             this.panel3.Location = new System.Drawing.Point(13, 348);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(658, 94);
             this.panel3.TabIndex = 3;
             // 
+            // LoadMoreButton
+            // 
+            this.LoadMoreButton.Location = new System.Drawing.Point(3, 43);
+            this.LoadMoreButton.Name = "LoadMoreButton";
+            this.LoadMoreButton.Size = new System.Drawing.Size(88, 42);
+            this.LoadMoreButton.TabIndex = 5;
+            this.LoadMoreButton.Text = "Прогрузить еще";
+            this.LoadMoreButton.UseVisualStyleBackColor = true;
+            this.LoadMoreButton.Click += new System.EventHandler(this.LoadMoreButton_Click);
+            // 
+            // ReloadButton
+            // 
+            this.ReloadButton.Location = new System.Drawing.Point(3, 14);
+            this.ReloadButton.Name = "ReloadButton";
+            this.ReloadButton.Size = new System.Drawing.Size(88, 23);
+            this.ReloadButton.TabIndex = 6;
+            this.ReloadButton.Text = "Обновить";
+            this.ReloadButton.UseVisualStyleBackColor = true;
+            this.ReloadButton.Click += new System.EventHandler(this.ReloadButton_Click);
+            // 
             // RichTextBoxDialog
             // 
             this.RichTextBoxDialog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RichTextBoxDialog.Location = new System.Drawing.Point(47, 13);
+            this.RichTextBoxDialog.Location = new System.Drawing.Point(97, 13);
             this.RichTextBoxDialog.Name = "RichTextBoxDialog";
             this.RichTextBoxDialog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.RichTextBoxDialog.Size = new System.Drawing.Size(527, 72);
+            this.RichTextBoxDialog.Size = new System.Drawing.Size(477, 72);
             this.RichTextBoxDialog.TabIndex = 0;
             this.RichTextBoxDialog.Text = "";
-            // 
-            // ButtonAttacments
-            // 
-            this.ButtonAttacments.AutoSize = true;
-            this.ButtonAttacments.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonAttacments.Font = new System.Drawing.Font("Tahoma", 15F);
-            this.ButtonAttacments.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ButtonAttacments.Location = new System.Drawing.Point(16, 13);
-            this.ButtonAttacments.Name = "ButtonAttacments";
-            this.ButtonAttacments.Size = new System.Drawing.Size(25, 24);
-            this.ButtonAttacments.TabIndex = 2;
-            this.ButtonAttacments.Text = "+";
             // 
             // ButtonSendDialog
             // 
@@ -648,23 +674,6 @@ namespace Vkapp
             this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // MessagesListView
-            // 
-            this.MessagesListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.MessagesListView.CellEditUseWholeCell = false;
-            this.MessagesListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.MessagesListView.FullRowSelect = true;
-            this.MessagesListView.HideSelection = false;
-            this.MessagesListView.Location = new System.Drawing.Point(47, 16);
-            this.MessagesListView.MultiSelect = false;
-            this.MessagesListView.Name = "MessagesListView";
-            this.MessagesListView.RowHeight = 50;
-            this.MessagesListView.ShowGroups = false;
-            this.MessagesListView.Size = new System.Drawing.Size(527, 241);
-            this.MessagesListView.TabIndex = 4;
-            this.MessagesListView.UseCompatibleStateImageBehavior = false;
-            this.MessagesListView.View = System.Windows.Forms.View.Details;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -695,8 +704,6 @@ namespace Vkapp
             ((System.ComponentModel.ISupportInitialize)(this.TabdialogPictureBox)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MessagesListView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -733,11 +740,9 @@ namespace Vkapp
         private System.Windows.Forms.Button UpdateConversationButton;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label BackArrowButtonTabDialog;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.RichTextBox RichTextBoxDialog;
-        private System.Windows.Forms.Label ButtonAttacments;
         private System.Windows.Forms.Button ButtonSendDialog;
         private System.Windows.Forms.Label TabDialogOnlineLabel;
         private System.Windows.Forms.Label TabDialogNameLabel;
@@ -750,7 +755,12 @@ namespace Vkapp
         private System.Windows.Forms.Button TabUserInfoFriendActionsButton;
         private System.Windows.Forms.Label TabUserInfoFollowYouLabel;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label label1;
-        private BrightIdeasSoftware.ObjectListView MessagesListView;
+        private System.Windows.Forms.ListView ListViewMsg;
+        private System.Windows.Forms.ColumnHeader NameColumn;
+        private System.Windows.Forms.ColumnHeader TextColumn;
+        private System.Windows.Forms.ColumnHeader DateColumn;
+        private System.Windows.Forms.Button LoadMoreButton;
+        private System.Windows.Forms.Button ReloadButton;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

@@ -24,10 +24,10 @@ namespace Vkapp
     {
         private struct Msg
         {
-            string Image;
-            string Name;
-            String Text;
-            DateTime Date;
+           public string Image;
+           public string Name;
+           public String Text;
+           public DateTime Date;
           //  VkNet.Model.Message Message;
             public Msg(VkNet.Model.Message Message)
             {
@@ -42,32 +42,78 @@ namespace Vkapp
         static int State;
         User User;
         List<VkNet.Model.User> UserList;
-        List<Msg> MsgList;
-        private  void LoadMessages()
+        List<VkNet.Model.Message> MsgList;
+        long? lastMesage;
+        long? FirestMesage;
+        long? Total;
+        
+
+        private  void LoadMoreMessages()
         {
-           // MsgList.Clear();
-            //Task<MessageGetHistoryObject> outerTask  = D.api.Messages.GetHistoryAsync(new MessagesGetHistoryParams() { 
-            //  
-            //
-            //});
-            //MessageGetHistoryObject results = new MessageGetHistoryObject();
-            //await outerTask.ContinueWith(task =>
-            //{
-            //    results = task.Result;
-            //});
-            MessageGetHistoryObject results = D.api.Messages.GetHistory(new MessagesGetHistoryParams() { PeerId = D.Context.ActiveChat.Conv.Peer.Id });
-           
-            //System.Collections.ICollection  collection = (System.Collections.ICollection)results.Messages;
+
+            MessageGetHistoryObject results = D.api.Messages.GetHistory(new MessagesGetHistoryParams() {
+                PeerId = D.Context.ActiveChat.Conv.Peer.Id,
+                Offset = lastMesage
+
+            });
+            lastMesage += 20;
+            MsgList.AddRange(results.Messages);
+
+
             foreach ( var i in results.Messages)
             {
-                var tmp = new Msg(i);
-                MsgList.Add(tmp);
+
+               
+                var tmpitem = new ListViewItem();
+                var u = UserList.Find(item => item.Id == i.FromId);
+                tmpitem.Text = u.FirstName + " " + u.LastName;
+                ListViewItem.ListViewSubItem t1= new ListViewItem.ListViewSubItem();
+                ListViewItem.ListViewSubItem t2= new ListViewItem.ListViewSubItem();
+                t1.Text = i.Text;
+                if (t1.Text == "") t1.Text = "Вложение";
+                t2.Text = DateSince((DateTime)i.Date);
+                tmpitem.SubItems.Add(t1);
+                tmpitem.SubItems.Add(t2);
+                ListViewMsg.Items.Add(tmpitem);
             }
-            
-           // MessagesListView.Clear();
-            MessagesListView.AddObjects(MsgList);
+
+            // MessagesListView.Clear();
+         
+        }
+        private void LoadMessages()
+        {
+            List<VkNet.Model.Message> results = new List<VkNet.Model.Message>();
+            int last = -1;
+            do
+            {
+                results.AddRange(D.api.Messages.GetHistory(new MessagesGetHistoryParams() { PeerId = D.Context.ActiveChat.Conv.Peer.Id }).Messages.ToList());
+
+                last = results.FindIndex(item => item.Id == MsgList.First().Id);
+                if (last == 0) return;
+            } while (last == -1);
+            var Addition = new List<VkNet.Model.Message>();
+            Addition = results.GetRange(0, last);
+            lastMesage += Addition.Count();
+            MsgList.InsertRange(0, Addition);
+            foreach (var i in Addition)
+            {
+
+                var tmpitem = new ListViewItem();
+                var u = UserList.Find(item => item.Id == i.FromId);
+                tmpitem.Text = u.FirstName + " " + u.LastName;
+                ListViewItem.ListViewSubItem t1 = new ListViewItem.ListViewSubItem();
+                ListViewItem.ListViewSubItem t2 = new ListViewItem.ListViewSubItem();
+                t1.Text = i.Text;
+                if (t1.Text == "") t1.Text = "Вложение";
+                t2.Text = DateSince((DateTime)i.Date);
+                tmpitem.SubItems.Add(t1);
+                tmpitem.SubItems.Add(t2);
+                ListViewMsg.Items.Insert(0,  tmpitem);
+            }
+
 
         }
+        /*
         private void InitMessagesListView()
         {
             MessagesListView.OwnerDraw = true;
@@ -131,7 +177,7 @@ namespace Vkapp
                     return t.Date.ToString();
                 }
             };
-        }
+        }*/
         private void ButtonSendDialog_Click(object sender, EventArgs e)
         {
             var Params = new VkNet.Model.RequestParams.MessagesSendParams();
@@ -141,16 +187,28 @@ namespace Vkapp
             var Msg = D.api.Messages.Send(Params);
             RichTextBoxDialog.Clear();
         }
+        private void LoadUsers()
+        {
+            var l = D.api.Messages.GetConversationMembers(D.Context.ActiveChat.Conv.Peer.Id,null);
+            UserList.AddRange(l.Profiles);
+        }
         private void LoadDialogTab()
         {
-           // timer1.Enabled = true;
+            MsgList = new List<VkNet.Model.Message>();
+            UserList = new List<User>();
+         
             timer1.Interval = 1000;
+            lastMesage=0;
+            FirestMesage=0;
+            Total = 0;
+         
+            LoadUsers();
 
-            InitMessagesListView();
 
-            MsgList = new List<Msg>();
+
+
+            LoadMoreMessages();
            
-            LoadMessages();
             TabDialogNameLabel.Text = D.Context.ActiveChat.Title;
             TabdialogPictureBox.Image = D.Context.ActiveChat.image;
             
@@ -180,15 +238,29 @@ namespace Vkapp
                 Page.SelectedTab = TabUserInfo;
             }
         }
-        private void timer1_Tick(object sender, EventArgs e)
+        private  void timer1_Tick(object sender, EventArgs e)
         {
 
-            LoadMessages();
+          
+               LoadMessages(); 
+       
 
         }
-        private void label1_Click(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            LoadMessages();
+            timer1.Enabled = !checkBox1.Checked;
+        }
+
+
+        private  void ReloadButton_Click(object sender, EventArgs e)
+        {
+           
+                LoadMessages();
+           
+        }
+        private void LoadMoreButton_Click(object sender, EventArgs e)
+        {
+            LoadMoreMessages();
         }
     }
 }
