@@ -33,9 +33,9 @@ namespace Vkapp
           
            // EmailTextbox.Text = "+79003557072";
            // PasswordlTextbox.Text = "Aveemperor404";
-            EmailTextbox.Text = "89208405463";
-            PasswordlTextbox.Text = "Aveemperor1";
-            LoginAsync();
+            ///EmailTextbox.Text = "89208405463";
+            ///PasswordlTextbox.Text = "Aveemperor1";
+            ///LoginAsync();
         }
       
         private async void LoginAsync()

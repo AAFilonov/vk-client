@@ -169,8 +169,8 @@ namespace Vkapp
       
         private void Page_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            
-           
+
+            ListViewMsg.Items.Clear();
             switch (e.TabPage.Name)
             {
                 case "TabUserInfo":

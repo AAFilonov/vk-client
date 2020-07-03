@@ -39,14 +39,15 @@ namespace Vkapp
             {
                 results = task.Result;
               
-                foreach (var i in results.Items)
-                {
-                    TMP.Add(new MyDialog(i.Conversation, i.LastMessage));
-
-                    D.TotalDialogsCount++;
-                    //DialogPictureList.Images.Add(DialogsList.Last().Id, LoadImageFromUrl(DialogsList.Last().PicUrl));
-                }
+               
             });
+            foreach (var i in results.Items)
+            {
+                TMP.Add(new MyDialog(i.Conversation, i.LastMessage));
+
+                D.TotalDialogsCount++;
+                //DialogPictureList.Images.Add(DialogsList.Last().Id, LoadImageFromUrl(DialogsList.Last().PicUrl));
+            }
             D.DialogsList.AddRange(TMP);
             ObjDialogList.AddObjects(TMP);
            

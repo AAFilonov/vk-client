@@ -221,9 +221,16 @@ namespace Vkapp
                     State = 0;
                     break;
                 case "Chat":
+                    D.PreviosPagesContexts.Pop();
+                    Page.SelectedTab = TabConversations;
+                  
+                    return;
                     State = 1;
                     break;
                 case "group":
+                    D.PreviosPagesContexts.Pop();
+                    Page.SelectedTab = TabConversations;
+                    return;
                     State = 2;
                     break;
             }
